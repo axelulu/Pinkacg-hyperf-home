@@ -12,7 +12,7 @@
               :to='"/" + v.id + ".html"'
               style='background-color: rgba(225,225,225,.3);'>
               <img
-                :src='"http://localhost:9501/" + v.header_img'
+                :src='getImg(v.header_img)'
                 :alt='v.name'
                 class='lazy ghost-popular-img show'
                 style='background-color: rgb(245, 217, 215); display: inline;'>
@@ -59,6 +59,7 @@
 import { getSettingList } from '@/api/setting'
 import cms from './cms'
 import { getPostList } from '@/api/post'
+import { getImg } from '@/utils/util'
 
 export default {
   name: 'Index',
@@ -68,7 +69,8 @@ export default {
   data () {
     return {
       'cms': {},
-      'popularPost': {}
+      'popularPost': {},
+      getImg
     }
   },
   created () {

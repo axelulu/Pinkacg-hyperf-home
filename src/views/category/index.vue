@@ -42,7 +42,7 @@
                         <img
                           width="500"
                           height="340"
-                          :src="'http://localhost:9501/' + v.header_img"
+                          :src="getImg(v.header_img)"
                           class="lazy show"
                           alt="mkw"
                           style="display: block;"/>
@@ -55,7 +55,7 @@
                       <img
                         class="post_box_avatar_img"
                         :title="v.authorMeta.name"
-                        :src="'http://localhost:9501/' + v.authorMeta.avatar"
+                        :src="getImg(v.authorMeta.avatar)"
                         width="50"
                         height="50"
                         :alt="v.authorMeta.name">
@@ -99,6 +99,7 @@
 
 <script>
 import { getPostList } from '@/api/post'
+import { getImg } from '@/utils/util'
 
 export default {
   name: 'Index',
@@ -106,7 +107,8 @@ export default {
     return {
       category: this.$route.params.slug,
       orderBy: 'id',
-      posts: []
+      posts: [],
+      getImg
     }
   },
   watch: {

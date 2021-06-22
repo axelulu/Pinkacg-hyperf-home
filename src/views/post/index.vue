@@ -179,7 +179,7 @@
                   <div class="ghost_author_widget_container">
                     <div class="ghost_author_widget_avatar">
                       <router-link class="ghost_author_widget_avatar_link" :to="'/author/' + postMeta.authorMeta.id">
-                        <img class="ghost_author_widget_avatar_img" width="150" height="150" :src="'http://localhost:9501/' + postMeta.authorMeta.avatar" alt="站长菌">
+                        <img class="ghost_author_widget_avatar_img" width="150" height="150" :src="getImg(postMeta.authorMeta.avatar)" alt="站长菌">
                       </router-link>
                     </div>
                     <div class="ghost_author_widget_info">
@@ -261,6 +261,7 @@
 <script>
 import { getPostList } from '@/api/post'
 import morePost from '@/views/post/morePost'
+import { getImg } from '@/utils/util'
 
 export default {
   name: 'Index',
@@ -269,7 +270,8 @@ export default {
   },
   data () {
     return {
-      'postMeta': {}
+      'postMeta': {},
+      getImg
     }
   },
   created () {
