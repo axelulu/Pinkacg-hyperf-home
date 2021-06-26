@@ -66,6 +66,11 @@ export default {
   components: {
     cms
   },
+  metaInfo () {
+    return {
+      title: '网站首页'
+    }
+  },
   data () {
     return {
       'cms': {},
@@ -83,7 +88,7 @@ export default {
     async getSetting () {
       const that = this
       await getSettingList({
-        'site': 'site_cms'
+        'name': 'site_cms'
       }).then(res => {
         console.log(res)
         if (res.code !== 200) {

@@ -31,6 +31,7 @@
     "vue-clipboard2": "^0.2.1",
     "vue-cropper": "0.4.9",
     "vue-i18n": "^8.17.4",
+    "vue-meta-info": "^0.1.7",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.1.2",
     "vue-svg-component-runtime": "^1.0.1",

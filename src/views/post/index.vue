@@ -6,9 +6,9 @@
           <h1 class="ghost_single_title">{{ postMeta.title }}</h1>
           <header class="ghost_single_header">
             <span class="single_header_item ghost_single_category" title="分类">
-              <router-link :to="'/category/' + postMeta.menu">
+              <router-link v-if='postMeta.menuMeta' :to="'/category/' + postMeta.menuMeta.value">
                 <i class="fa-folder-open fas fa-fw poi-icon" aria-hidden="true"></i>
-                <span class="ghost_icon_text">{{ postMeta.menu }}</span>
+                <span class="ghost_icon_text">{{ postMeta.menuMeta.label }}</span>
               </router-link>
             </span>
             <time datetime="2018-03-12 16:37:14" class="single_header_item ghost_single_date" title="3年前">
@@ -142,7 +142,7 @@
         <section>
           <div class="cat-container clearfix">
             <div id="ghost_box_1" class="cms-cat cms-cat-s7">
-              <morePost :k='postMeta.menu'></morePost>
+              <morePost v-if='postMeta.menuMeta' :k='postMeta.menuMeta.value'></morePost>
             </div>
           </div>
         </section>
@@ -174,7 +174,7 @@
                   <i class="fas fa-user-circle"></i>
                   <span>用户工具</span></span>
               </h3>
-              <div class="ghost_author_header ghost_my_flowers ghost_author_widget">
+              <div v-if='postMeta.authorMeta' :style="'background-image:url(' + getImg(postMeta.authorMeta.background) + ');'" class="ghost_author_header ghost_my_flowers ghost_author_widget">
                 <div v-if='postMeta.authorMeta' class="mkw1">
                   <div class="ghost_author_widget_container">
                     <div class="ghost_author_widget_avatar">
@@ -267,6 +267,11 @@ export default {
   name: 'Index',
   components: {
     morePost
+  },
+  metaInfo () {
+    return {
+      title: this.postMeta.title + ' - 文章页面'
+    }
   },
   data () {
     return {

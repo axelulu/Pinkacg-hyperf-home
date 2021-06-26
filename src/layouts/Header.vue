@@ -1,19 +1,19 @@
 <template>
   <div>
     <div
-      :style="'background-image:url(http://localhost:9501/' + site_setting.header_img + ');'"
+      :style="'background-image:url(http://localhost:9501/' + site_meta.header_img + ');'"
       class='header-tu'>
       <div class='container'>
         <div class='header-yonghu poi-container'>
           <nav class='ghost-topbar'>
             <ul class='menu'>
               <li class='ghost-topbar-item is-icon-text'>
-                <a href='' title='测试' target='_self'>
+                <router-link :to='"/"' title='测试' target='_self'>
                   <i
                   style='font-size: 1.2em;'
                   class='fas fa-2x poi-icon'></i>
                 <span>测试</span>
-                </a>
+                </router-link>
               </li>
             </ul>
           </nav>
@@ -21,7 +21,7 @@
         <!-- Logo -->
         <div class='ghost-head-nav'>
           <router-link class='logo nav-col' to='/' title=''>
-            <img class='ghost-logo' :src='"http://localhost:9501/" + site_setting.logo' alt='梦灵神社'>
+            <img class='ghost-logo' :src='"http://localhost:9501/" + site_meta.logo' alt='梦灵神社'>
           </router-link>
         </div>
       </div>
@@ -31,7 +31,7 @@
         <div style='margin:0px auto' class='header white'>
           <div class='ghost-header-logo'>
             <div
-              :style="'background-image:url(http://localhost:9501/' + site_setting.header_img + ');'"
+              :style="'background-image:url(http://localhost:9501/' + site_meta.header_img + ');'"
               class='header-bg'>
             </div>
           </div>
@@ -64,176 +64,162 @@
               </ul>
             </div>
             <div class='ghost-nav-tool__container'>
-              <div class='ghost_sign_daily'>
-                <a class='ghost_sign_daily_btn' title='未签到'>
-                  <span class='poi-icon fa-map-marker fas fa-fw'></span>
-                  <span class='poi-icon__text'>未签到</span>
+              <div v-if='isLogin' class="ghost_sign_daily">
+                <a class="ghost_sign_daily_btn" title="未签到">
+                  <span class="poi-icon fa-map-marker fas fa-fw" aria-hidden="true"></span>
+                  <span class="poi-icon__text">未签到</span>
                 </a>
               </div>
-              <li class='login-actions'>
-                <i
-                  class='ghost-author-posts-count'
-                  title='未读消息数量'
-                  style='background: red;border-radius: 50%;right: 48px;top: 5px;padding: 5px;'></i>
-                <a style='padding:0px;background: hsla(0, 0%, 100%, 0);' class='login-link bind-redirect'>
-                  <img
-                    src='https://img.catacg.cn/pinkacg_upload/img/2020/06/6027905533d2eec5809d812f5cd69d14f04263f0.png'
-                    alt=''
-                    class='ghost_guajian'>
-                  <img
-                    src='https://mkw2023.com/uploads/UserAvatar/147/2021/04/12/8472e4ef0f923923dc94b79ad9e6d996.png'
-                    alt='avatar'
-                    class='ghost_setting_content_avatar_img'
-                    width='100'
-                    height='100'>
+              <li v-if='isLogin' class="login-actions">
+                <i class="ghost-author-posts-count" title="未读消息数量" style="background: red;border-radius: 50%;right: 48px;top: 5px;padding: 5px;"></i>
+                <a style="padding:0px;background: hsla(0, 0%, 100%, 0);" class="login-link bind-redirect">
+                  <img src="https://img.catacg.cn/pinkacg_upload/img/2020/06/6027905533d2eec5809d812f5cd69d14f04263f0.png" alt="" class="ghost_guajian">
+                  <img src="https://mkw2023.com/uploads/UserAvatar/147/2021/04/12/8472e4ef0f923923dc94b79ad9e6d996.png" alt="avatar" class="ghost_setting_content_avatar_img" width="100" height="100">
                 </a>
 
-                <div class='ghost_user_menu_nav'>
-                  <div class='ghost_user_menu_item'>
-                    <div class='ghost_user_menu_item_title'>
-                      <div class='ghost_user_menu_item_title_icon'>
-                        <i class='poi-icon fas fa-address-card'></i>
+                <div class="ghost_user_menu_nav">
+                  <div class="ghost_user_menu_item">
+                    <div class="ghost_user_menu_item_title">
+                      <div class="ghost_user_menu_item_title_icon">
+                        <i class="poi-icon fas fa-address-card" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_title_text'>个人设置</div>
+                      <div class="ghost_user_menu_item_title_text">个人设置</div>
                     </div>
-                    <a href='https://mkw2023.com/?c=User&amp;m=setting' title='我的设置' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-cog'></i>
+                    <router-link to="/user/setting" title="我的设置" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-cog" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的设置</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=drafts' title='我的文章' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-copy'></i>
+                      <div class="ghost_user_menu_item_link_text">我的设置</div>
+                    </router-link>
+                    <router-link to="/user/draft" title="我的草稿" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-copy" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的草稿</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=newpost' title='新建文章' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-paint-brush'></i>
+                      <div class="ghost_user_menu_item_link_text">我的草稿</div>
+                    </router-link>
+                    <router-link to="/user/newpost" title="新建文章" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-paint-brush" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>新建文章</div>
-                    </a>
+                      <div class="ghost_user_menu_item_link_text">新建文章</div>
+                    </router-link>
                   </div>
-                  <div class='ghost_user_menu_item'>
-                    <div class='ghost_user_menu_item_title'>
-                      <div class='ghost_user_menu_item_title_icon'>
-                        <i class='poi-icon fa-bell fas'></i>
+                  <div class="ghost_user_menu_item">
+                    <div class="ghost_user_menu_item_title">
+                      <div class="ghost_user_menu_item_title_icon">
+                        <i class="poi-icon fa-bell fas" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_title_text'>消息管理</div>
+                      <div class="ghost_user_menu_item_title_text">消息管理</div>
                     </div>
-                    <i style='top: 64px;right: 82px;' class='ghost-author-posts-count' title='未读通知数量'>0</i>
-                    <a href='https://mkw2023.com/?c=User&amp;m=notice' title='我的通知' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-bell'></i>
+                    <i style="top: 64px;right: 82px;" class="ghost-author-posts-count" title="未读通知数量">0</i>
+                    <router-link to="/user/notice" title="我的通知" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-bell" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的通知</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=msg' title='我的消息' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-envelope'></i>
+                      <div class="ghost_user_menu_item_link_text">我的通知</div>
+                    </router-link>
+                    <router-link to="/user/msg" title="我的消息" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-envelope" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的消息</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=orders' title='我的订单' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-shopping-cart'></i>
+                      <div class="ghost_user_menu_item_link_text">我的消息</div>
+                    </router-link>
+                    <router-link to="/user/order" title="我的订单" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-shopping-cart" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的订单</div>
-                    </a>
+                      <div class="ghost_user_menu_item_link_text">我的订单</div>
+                    </router-link>
                   </div>
-                  <div class='ghost_user_menu_item'>
-                    <div class='ghost_user_menu_item_title'>
-                      <div class='ghost_user_menu_item_title_icon'>
-                        <i class='poi-icon fas fa-user-circle'></i>
+                  <div class="ghost_user_menu_item">
+                    <div class="ghost_user_menu_item_title">
+                      <div class="ghost_user_menu_item_title_icon">
+                        <i class="poi-icon fas fa-user-circle" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_title_text'>个人中心</div>
+                      <div class="ghost_user_menu_item_title_text">个人中心</div>
                     </div>
-                    <a href='https://mkw2023.com/?c=User&amp;m=stars' title='我的收藏' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-heart'></i>
+                    <router-link to="/user/star" title="我的收藏" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-heart" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的收藏</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=posts' title='我的文章' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-file-alt'></i>
+                      <div class="ghost_user_menu_item_link_text">我的收藏</div>
+                    </router-link>
+                    <router-link to="/user/post" title="我的文章" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-file-alt" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的文章</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=fans' title='我的粉丝' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fa-users fas'></i>
+                      <div class="ghost_user_menu_item_link_text">我的文章</div>
+                    </router-link>
+                    <router-link to="/user/fan" title="我的粉丝" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fa-users fas" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的粉丝</div>
-                    </a>
+                      <div class="ghost_user_menu_item_link_text">我的粉丝</div>
+                    </router-link>
                   </div>
-                  <div class='ghost_user_menu_item'>
-                    <div class='ghost_user_menu_item_title'>
-                      <div class='ghost_user_menu_item_title_icon'>
-                        <i class='poi-icon fas fa-user-circle'></i>
+                  <div class="ghost_user_menu_item">
+                    <div class="ghost_user_menu_item_title">
+                      <div class="ghost_user_menu_item_title_icon">
+                        <i class="poi-icon fas fa-user-circle" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_title_text'>我的会员</div>
+                      <div class="ghost_user_menu_item_title_text">我的会员</div>
                     </div>
-                    <a href='https://mkw2023.com/?c=User&amp;m=vip' title='我的会员' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-user-circle'></i>
+                    <router-link to="/user/vip" title="我的会员" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-user-circle" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的会员</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=cash' title='我的余额' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-credit-card'></i>
+                      <div class="ghost_user_menu_item_link_text">我的会员</div>
+                    </router-link>
+                    <router-link to="/user/cash" title="我的余额" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-credit-card" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的余额</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=credits' title='我的积分' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-gem'></i>
+                      <div class="ghost_user_menu_item_link_text">我的余额</div>
+                    </router-link>
+                    <router-link to="/user/credit" title="我的积分" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-gem" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>我的积分</div>
-                    </a>
+                      <div class="ghost_user_menu_item_link_text">我的积分</div>
+                    </router-link>
                   </div>
-                  <div class='ghost_user_menu_item'>
-                    <div class='ghost_user_menu_item_title'>
-                      <div class='ghost_user_menu_item_title_icon'>
-                        <i class='poi-icon fas fa-unlock'></i>
+                  <div class="ghost_user_menu_item">
+                    <div class="ghost_user_menu_item_title">
+                      <div class="ghost_user_menu_item_title_icon">
+                        <i class="poi-icon fas fa-unlock" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_title_text'>管理设置</div>
+                      <div class="ghost_user_menu_item_title_text">管理设置</div>
                     </div>
-                    <a href='https://mkw2023.com/?c=User&amp;m=shop' title='商城中心' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-gem'></i>
+                    <router-link to="/user/shop" title="商城中心" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-gem" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>商城中心</div>
-                    </a>
-                    <a href='https://mkw2023.com/?c=User&amp;m=price' title='积分抽奖' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-gem'></i>
+                      <div class="ghost_user_menu_item_link_text">商城中心</div>
+                    </router-link>
+                    <router-link to="/user/lottery" title="积分抽奖" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-gem" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>积分抽奖</div>
-                    </a>
-                    <a href='https://mkw2023.com/?p=admin' title='后台管理' class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-gem'></i>
+                      <div class="ghost_user_menu_item_link_text">积分抽奖</div>
+                    </router-link>
+                    <a @click='Logouts' title="注销账号" class="ghost_user_menu_item_link">
+                      <div class="ghost_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-sign-out-alt" aria-hidden="true"></i>
                       </div>
-                      <div class='ghost_user_menu_item_link_text'>后台管理</div>
-                    </a>
-                    <a
-                      href='https://mkw2023.com/index.php?c=User&amp;a=Logout'
-                      title='注销账号'
-                      class='ghost_user_menu_item_link'>
-                      <div class='ghost_user_menu_item_link_icon'>
-                        <i class='poi-icon fas fa-sign-out-alt'></i>
-                      </div>
-                      <div class='ghost_user_menu_item_link_text'>注销账号</div>
+                      <div class="ghost_user_menu_item_link_text">注销账号</div>
                     </a>
                   </div>
                 </div>
 
               </li>
+              <li v-else class="login-actions">
+                <a
+                  @click='$emit("changeLogin", true)'
+                  class="user-login login-link bind-redirect"><span>登陆</span></a>
+              </li>
               <div class='ghost_header_search_anniu ghost-search-bar_toggle-btn_container'>
                 <a
+                  @click='$emit("changeSearch", true)'
                   class='poi-icon fa-search fa fa-2x ghost-search-bar_btn'
                   aria-label='搜索'
                   title='搜索'>
@@ -250,13 +236,17 @@
 <script>
 import { getCategoryList } from '@/api/category'
 import { getSettingList } from '@/api/setting'
+import storage from 'store'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Header',
   data () {
     return {
+      'isLogin': !!storage.get(ACCESS_TOKEN),
       'category': [],
-      'site_setting': {}
+      'site_meta': {}
     }
   },
   created () {
@@ -266,20 +256,45 @@ export default {
       'son_slug': 1
     }).then((res) => {
       this.category = res.result.data
-      console.log(this.category)
     })
   },
+  metaInfo () {
+    return {
+      meta: [
+        {
+          name: '关键词',
+          content: this.site_meta.seo_keywords
+        },
+        {
+          name: '描述',
+          content: this.site_meta.seo_description
+        }
+      ]
+    }
+  },
   methods: {
+    ...mapActions(['Logout']),
+    Logouts () {
+      this.Logout().then(() => {
+        this.$message.success('退出成功')
+      }).catch(() => {
+        this.$message.error('退出失败')
+      }).finally(() => {
+        setTimeout(() => {
+          window.location = '/'
+        }, 1000)
+      })
+    },
     async getSetting () {
       const that = this
       await getSettingList({
-        'site': 'site_setting'
+        'name': 'site_meta'
       }).then(res => {
         if (res.code !== 200) {
           that.$message.error(res.message)
           return []
         }
-        this.site_setting = res.result.data[0].value
+        this.site_meta = res.result.data[0].value
       })
     }
   }

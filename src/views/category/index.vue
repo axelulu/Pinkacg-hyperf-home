@@ -100,15 +100,22 @@
 <script>
 import { getPostList } from '@/api/post'
 import { getImg } from '@/utils/util'
+import { getCategoryList } from '@/api/category'
 
 export default {
   name: 'Index',
   data () {
     return {
       category: this.$route.params.slug,
+      categoryMeta: {},
       orderBy: 'id',
       posts: [],
       getImg
+    }
+  },
+  metaInfo () {
+    return {
+      title: this.categoryMeta.label + ' - 分类页面'
     }
   },
   watch: {
@@ -122,6 +129,11 @@ export default {
     }
   },
   created () {
+    getCategoryList({
+      'value': this.category
+    }).then((res) => {
+      this.categoryMeta = (res.result.data)[0]
+    })
     getPostList({
       'menu': this.category,
       'orderBy': this.orderBy
