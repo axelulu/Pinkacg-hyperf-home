@@ -30,7 +30,7 @@
             <h2 class="entry-title h4"><router-link :to="'/' + v.id + '.html'" rel="bookmark">{{ v.title }}</router-link>
             </h2>
             <div class="entry-meta entry-meta-1">
-              <span class="entry-date text-muted"><i class="fas fa-bell"></i><time class="entry-date" :datetime="v.updated_at" title="23小时前">{{ v.updated_at }}</time></span>
+              <span class="entry-date text-muted"><i class="fas fa-bell"></i><time class="entry-date" :datetime="v.updated_at" :title="v.updated_at">{{ diaplayTime(v.updated_at) }}</time></span>
               <span class="comments-link text-muted pull-right"><i class="far fa-comment"></i><a>{{ v.comment_count }}</a></span>
               <span class="views-count text-muted pull-right"><i class="fas fa-eye"></i>{{ v.views }}</span>
             </div>
@@ -43,7 +43,7 @@
 
 <script>
 import { getPostList } from '@/api/post'
-import { getImg } from '@/utils/util'
+import { getImg, diaplayTime } from '@/utils/util'
 
 export default {
   name: 'morePost',
@@ -51,7 +51,8 @@ export default {
   data () {
     return {
       'morePost': {},
-      getImg
+      getImg,
+      diaplayTime
     }
   },
   created () {

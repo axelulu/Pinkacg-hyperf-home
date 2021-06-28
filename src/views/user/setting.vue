@@ -4,11 +4,11 @@
       <user-aside></user-aside>
       <div class="col-md-10 float-right setting_box">
         <div class="ghost_setting_content">
-          <div data-userid="147" class="ghost_setting_content_container">
+          <div class="ghost_setting_content_container">
             <fieldset class="ghost_setting_content_item">
               <legend class="ghost_setting_content_item_title">
                 <span class="ghost_setting_content_primary">
-                  <span class="poi-icon fa-user-circle fas fa-fw" aria-hidden="true"></span>
+                  <span class="poi-icon fa-user-circle fas fa-fw"></span>
                   <span class="ghost_setting_content_text">我的头像</span></span>
               </legend>
               <div class="ghost_setting_content_item_content">
@@ -19,114 +19,127 @@
                   <div class="ghost_setting_content_my_avatar_img">
                     <img
                       style="width: 100px;height: 100px;"
-                      src="https://mkw2023.com/uploads/UserAvatar/147/2021/04/12/8472e4ef0f923923dc94b79ad9e6d996.png"
+                      :src="getImg(userInfo.avatar)"
                       alt="avatar"
                       class="ghost_setting_content_avatar_img"
                       width="100"
                       height="100"></div>
                   <label class="ghost_setting_content_my_avatar_upload-btn">
-                    <span class="poi-icon fa-camera fas fa-fw" aria-hidden="true"></span>
+                    <span class="poi-icon fa-camera fas fa-fw"></span>
                     <span class="ghost_setting_content_text">更改我的头像</span>
-                    <input
+                    <a-input
                       style="display:none"
                       type="file"
                       name="my_avatar"
                       id="my_avatar"
                       accept=".jpg, .gif, .png"
-                      resetonclick="true"
-                      data-nonce="f052e9ac30"></label>
+                      resetonclick="true"/>
+                  </label>
                 </div>
               </div>
             </fieldset>
             <fieldset class="ghost_setting_content_item">
               <legend class="ghost_setting_content_item_title">
                 <span class="ghost_setting_content_primary">
-                  <span class="poi-icon fa-user-circle fas fa-fw" aria-hidden="true"></span>
+                  <span class="poi-icon fa-user-circle fas fa-fw"></span>
                   <span class="ghost_setting_content_text">个人资料</span></span>
               </legend>
               <div class="ghost_setting_content_item_content">
                 <div class="ghost_setting_content_preface">
                   <p>这里可以修改个人资料哦！</p>
                 </div>
-                <form action="javascript:;" id="my_setting_information">
-                  <div class="ghost_setting_content_preface_item">
+                <a-form-model
+                  :model="userInfo"
+                  ref='userInfo'
+                  :rules='userInfoRules'
+                  id="my_setting_information">
+                  <a-form-model-item
+                    prop='name'
+                    class="ghost_setting_content_preface_item">
                     <div class="clearfix ">
                       <div class="col-lg-2 float-left">
                         <div class="ghost_setting_content_preface_item_title">昵称</div>
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <input
-                            type="name"
+                          <a-input
                             class="ghost_setting_content_preface_control"
-                            required=""
                             placeholder="昵称"
                             title="昵称"
-                            value="mkw123"></div>
+                            v-model="userInfo.name"/>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item">
+                  </a-form-model-item>
+                  <a-form-model-item
+                    prop='desc'
+                    class="ghost_setting_content_preface_item">
                     <div class="clearfix ">
                       <div class="col-lg-2 float-left">
                         <div class="ghost_setting_content_preface_item_title">描述</div>
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <textarea
-                            type="dec"
+                          <a-textarea
                             class="ghost_setting_content_preface_control"
-                            rows="5"
                             placeholder="描述"
                             title="描述"
-                            value="描述"></textarea>
+                            v-model="userInfo.desc">
+                          </a-textarea>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item">
+                  </a-form-model-item>
+                  <a-form-model-item class="ghost_setting_content_preface_item">
                     <div class="clearfix ">
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <button type="submit" class="my_text_msg ghost_setting_content_btn_success">
-                            <span class="poi-icon fa-check fas fa-fw" aria-hidden="true"></span>
-                            <span class="ghost_setting_content_text">更新个人资料</span></button>
+                          <a-button @click='updateUserInfo' class="my_text_msg ghost_setting_content_btn_success">
+                            <span class="poi-icon fa-check fas fa-fw"></span>
+                            <span class="ghost_setting_content_text">更新个人资料</span>
+                          </a-button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </form>
+                  </a-form-model-item>
+                </a-form-model>
               </div>
             </fieldset>
             <fieldset class="ghost_setting_content_item">
               <legend class="ghost_setting_content_item_title">
                 <span class="ghost_setting_content_primary">
-                  <span class="poi-icon fa-at fas fa-fw" aria-hidden="true"></span>
+                  <span class="poi-icon fa-at fas fa-fw"></span>
                   <span class="ghost_setting_content_text">账号邮箱</span></span>
               </legend>
               <div class="ghost_setting_content_item_content">
                 <div class="ghost_setting_content_preface">
                   <p>修改账号邮箱，需要 -10 个喵爪哦！</p>
                 </div>
-                <form action="javascript:;">
-                  <div class="ghost_setting_content_preface_item">
+                <a-form-model
+                  :model="userEmail"
+                  ref='userEmail'
+                  :rules='userEmailRules'>
+                  <a-form-model-item
+                    prop='email'
+                    class="ghost_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
-                        <div class="ghost_setting_content_preface_item_title">邮箱</div>
+                        <div class="ghost_setting_content_preface_item_title">新邮箱</div>
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <input
-                            type="email"
+                          <a-input
                             class="ghost_setting_content_preface_control"
-                            placeholder="邮箱"
-                            title="邮箱"
-                            required=""
-                            value="2877136577@qq.com"></div>
+                            placeholder="新邮箱"
+                            title="新邮箱"
+                            v-model="userEmail.email"/>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item">
+                  </a-form-model-item>
+                  <a-form-model-item
+                    prop='myConfirm'
+                    class="ghost_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
                         <div class="ghost_setting_content_preface_item_title">验证码</div>
@@ -135,91 +148,89 @@
                         <div class="ghost_setting_content_preface_item_content">
                           <div class="clearfix">
                             <div style="padding-left:0px" class="col-lg-5 float-left">
-                              <input
-                                type="yanzhengma"
+                              <a-input
                                 class="ghost_setting_content_preface_control"
                                 placeholder="验证码"
                                 title="验证码"
-                                required=""
-                                value=""></div>
+                                v-model='userEmail.myConfirm'/>
+                            </div>
                             <div class="col-lg-7 float-right">
-                              <a class="sent_email ghost_setting_content_text_email">
-                                <span class="poi-icon fa-envelope fas fa-fw" aria-hidden="true"></span>
-                                <span class="">发送验证码到新邮箱</span></a>
+                              <a @click='sendMails' class="sent_email ghost_setting_content_text_email">
+                                <span class="poi-icon fa-envelope fas fa-fw"></span>
+                                <span class="">发送验证码</span>
+                              </a>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item">
+                  </a-form-model-item>
+                  <a-form-model-item class="ghost_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
                         <div class="ghost_setting_content_preface_item_title"></div>
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <button
-                            type="submit"
-                            data-emailnonce="a1f5061af2"
+                          <a-button
+                            @click='updateUserEmails'
                             class="my_email_msg ghost_setting_content_btn_success">
-                            <span class="poi-icon fa-check fas fa-fw" aria-hidden="true"></span>
-                            <span class="ghost_setting_content_text">更新邮箱</span></button>
+                            <span class="poi-icon fa-check fas fa-fw"></span>
+                            <span class="ghost_setting_content_text">更新邮箱</span>
+                          </a-button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </form>
+                  </a-form-model-item>
+                </a-form-model>
               </div>
             </fieldset>
             <fieldset class="ghost_setting_content_item">
               <legend class="ghost_setting_content_item__title is-enabled-toggle">
                 <span class="ghost_setting_content_primary">
-                  <span class="poi-icon fa-lock fas fa-fw" aria-hidden="true"></span>
+                  <span class="poi-icon fa-lock fas fa-fw"></span>
                   <span class="ghost_setting_content_text">我的密码</span></span>
               </legend>
               <div class="ghost_setting_content_item__content is-expand">
                 <div class="ghost_setting_content_preface">
                   <p>修改密码，需要 -10 个喵爪哦！</p>
                 </div>
-                <form action="javascript:;">
-                  <div class="ghost_setting_content_preface_item">
+                <a-form-model
+                  :model="userNewPassword"
+                  ref='userNewPassword'
+                  :rules='userNewPasswordRules'>
+                  <a-form-model-item class="ghost_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
                         <div class="ghost_setting_content_preface_item_title">旧密码</div>
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <input
-                            type="oldpassword"
+                          <a-input
                             class="ghost_setting_content_preface_control"
-                            name="oldPwd"
-                            required=""
                             placeholder="旧密码"
                             title="旧密码"
-                            value=""></div>
+                            v-model='userNewPassword.password'/>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item">
+                  </a-form-model-item>
+                  <a-form-model-item class="ghost_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
                         <div class="ghost_setting_content_preface_item_title">新密码</div>
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <input
-                            type="newpassword"
+                          <a-input
                             class="ghost_setting_content_preface_control"
-                            name="newPwd"
-                            required=""
                             placeholder="新密码"
                             title="新密码"
-                            minlength="6"
-                            value=""></div>
+                            v-model='userNewPassword.newPassword'/>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </a-form-model-item>
                   <div class="ghost_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -227,15 +238,12 @@
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <input
-                            type="new_password"
+                          <a-input
                             class="ghost_setting_content_preface_control"
-                            name="reTypeNewPwd"
-                            required=""
                             placeholder="确认新密码"
                             title="确认新密码"
-                            minlength="6"
-                            value=""></div>
+                            v-model='userNewPassword.confirmPassword'/>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -246,31 +254,31 @@
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <button
-                            type="submit"
-                            data-pwdnonce="4cb0ab1329"
+                          <a-button
+                            @click='updateUserPassword'
                             class="my_pwd_msg ghost_setting_content_btn_success">
-                            <span class="poi-icon fa-check fas fa-fw" aria-hidden="true"></span>
-                            <span class="ghost_setting_content_text">更新密码</span></button>
+                            <span class="poi-icon fa-check fas fa-fw"></span>
+                            <span class="ghost_setting_content_text">更新密码</span>
+                          </a-button>
                         </div>
                       </div>
                     </div>
                   </div>
-                </form>
+                </a-form-model>
               </div>
             </fieldset>
             <fieldset class="ghost_setting_content_item">
               <legend class="ghost_setting_content_item__title is-enabled-toggle">
                 <span class="ghost_setting_content_primary">
-                  <span class="poi-icon fa-lock fas fa-fw" aria-hidden="true"></span>
+                  <span class="poi-icon fa-lock fas fa-fw"></span>
                   <span class="ghost_setting_content_text">提醒显示</span></span>
               </legend>
               <div class="ghost_setting_content_item__content is-expand">
                 <div class="ghost_setting_content_preface">
                   <p>邮件提醒及内容显示开关</p>
                 </div>
-                <form action="javascript:;">
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
+                <a-form-model>
+                  <a-form-model-item class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
                     <div class="clearfix">
                       <div class="col-lg-4 float-left">
                         <div class="ghost_setting_content_preface_item_title">显示ip地址</div>
@@ -289,247 +297,23 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">登录邮件提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="login_email_msg"
-                                  class="ghost_login_email_msg checkbox">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">忘记密码邮件提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="forget_email_msg"
-                                  class="ghost_forget_email_msg checkbox"
-                                  checked="">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">修改密码邮件提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="pwd_email_msg"
-                                  class="ghost_pwd_email_msg checkbox"
-                                  checked="">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">修改邮箱邮件提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="myemail_email_msg"
-                                  class="ghost_myemail_email_msg checkbox"
-                                  checked="">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">修改头像邮件提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="avatar_email_msg"
-                                  class="ghost_avatar_email_msg checkbox"
-                                  checked="">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">发布评论邮件提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="comment_email_msg"
-                                  class="ghost_comment_email_msg checkbox">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">发布文章邮件提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="post_email_msg"
-                                  class="ghost_post_email_msg checkbox"
-                                  checked="">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">积分购买链接提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="buy_download_link"
-                                  class="ghost_buy_download_link checkbox"
-                                  checked="">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item" style="margin: 25px 0px;">
-                    <div class="clearfix">
-                      <div class="col-lg-4 float-left">
-                        <div class="ghost_setting_content_preface_item_title">用户私信提醒</div>
-                      </div>
-                      <div class="col-lg-8 float-right">
-                        <div class="ghost_setting_content_preface_item_content">
-                          <div class="toggle-button-cover">
-                            <div class="button-cover">
-                              <div class="button r">
-                                <input
-                                  value="yes"
-                                  type="checkbox"
-                                  name="message_email_msg"
-                                  class="ghost_message_email_msg checkbox"
-                                  checked="">
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ghost_setting_content_preface_item">
+                  </a-form-model-item>
+                  <a-form-model-item class="ghost_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
                         <div class="ghost_setting_content_preface_item_title"></div>
                       </div>
                       <div class="col-lg-10 float-right">
                         <div class="ghost_setting_content_preface_item_content">
-                          <button
-                            type="submit"
+                          <a-button
                             class="my_switch_msg ghost_setting_content_btn_success">
-                            <span class="poi-icon fa-check fas fa-fw" aria-hidden="true"></span>
-                            <span class="ghost_setting_content_text">更新选项</span></button>
+                            <span class="poi-icon fa-check fas fa-fw"></span>
+                            <span class="ghost_setting_content_text">更新选项</span></a-button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </form>
+                  </a-form-model-item>
+                </a-form-model>
               </div>
             </fieldset>
           </div>
@@ -541,15 +325,126 @@
 
 <script>
 import userAside from '@/views/user/components/aside'
+import { getUserList, sendChangeMail, updateUserEmail, updateUserInfo, updateUserPassword } from '@/api/user'
+import { getImg } from '@/utils/util'
 
 export default {
   name: 'Index',
   components: {
     userAside
+  },
+  data () {
+    return {
+      'userInfoRules': {
+        name: [{ required: true, message: '请输入名称！' }],
+        desc: [{ required: true, message: '请输入描述！' }]
+      },
+      'userEmailRules': {
+        email: [{ required: true, message: '请输入邮箱！' }],
+        myConfirm: [{ required: true, message: '请输入验证码！' }]
+      },
+      'userNewPasswordRules': {
+        email: [{ required: true, message: '请输入邮箱！' }],
+        myConfirm: [{ required: true, message: '请输入验证码！' }]
+      },
+      'userNewPassword': {
+        'password': '',
+        'confirmPassword': '',
+        'newPassword': ''
+      },
+      'userEmail': {
+        'myConfirm': '',
+        'email': ''
+      },
+      'userInfo': {},
+      'userId': this.$store.getters.userInfo.id,
+      getImg
+    }
+  },
+  created () {
+    this.getUserInfo()
+  },
+  methods: {
+    updateUserEmails () {
+      const that = this
+      this.$refs.userNewPassword.validate(valide => {
+        if (valide) {
+          updateUserEmail({
+            'id': this.userInfo.id,
+            'email': this.userEmail.email,
+            'myConfirm': this.userEmail.myConfirm
+          }).then((res) => {
+            if (res.code !== 200) {
+              that.$message.error(res.message)
+              return []
+            }
+            that.$message.success(res.message)
+          })
+        }
+      })
+    },
+    sendMails () {
+      const that = this
+      sendChangeMail({
+        'id': this.userInfo.id,
+        'email': this.userEmail.email
+      }).then((res) => {
+        if (res.code !== 200) {
+          that.$message.error(res.message)
+          return []
+        }
+        that.$message.success(res.message)
+      })
+    },
+    updateUserPassword () {
+      const that = this
+      this.$refs.userNewPassword.validate(valide => {
+        if (valide) {
+          updateUserPassword(this.userNewPassword, this.userInfo.id).then((res) => {
+            if (res.code !== 200) {
+              that.$message.error(res.message)
+              return []
+            }
+            that.$message.success(res.message)
+          })
+        }
+      })
+    },
+    updateUserInfo () {
+      const that = this
+      this.$refs.userInfo.validate(valide => {
+        if (valide) {
+          updateUserInfo(this.userInfo).then((res) => {
+            if (res.code !== 200) {
+              that.$message.error(res.message)
+              return []
+            }
+            that.$message.success(res.message)
+          })
+        }
+      })
+    },
+    getUserInfo () {
+      const that = this
+      getUserList({
+        'id': this.userId
+      }).then((res) => {
+        if (res.code !== 200) {
+          that.$message.error(res.message)
+          return []
+        }
+        this.userInfo = res.result.data[0]
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
-
+  input, textarea, button {
+    font-size: 12px;
+  }
+  .ant-form-item {
+    margin-bottom: 0px;
+  }
 </style>

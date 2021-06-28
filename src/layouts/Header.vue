@@ -74,7 +74,7 @@
                 <i class="ghost-author-posts-count" title="未读消息数量" style="background: red;border-radius: 50%;right: 48px;top: 5px;padding: 5px;"></i>
                 <a style="padding:0px;background: hsla(0, 0%, 100%, 0);" class="login-link bind-redirect">
                   <img src="https://img.catacg.cn/pinkacg_upload/img/2020/06/6027905533d2eec5809d812f5cd69d14f04263f0.png" alt="" class="ghost_guajian">
-                  <img src="https://mkw2023.com/uploads/UserAvatar/147/2021/04/12/8472e4ef0f923923dc94b79ad9e6d996.png" alt="avatar" class="ghost_setting_content_avatar_img" width="100" height="100">
+                  <img :src="getImg($store.getters.avatar)" alt="avatar" class="ghost_setting_content_avatar_img" width="100" height="100">
                 </a>
 
                 <div class="ghost_user_menu_nav">
@@ -239,6 +239,7 @@ import { getSettingList } from '@/api/setting'
 import storage from 'store'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { mapActions } from 'vuex'
+import { getImg } from '@/utils/util'
 
 export default {
   name: 'Header',
@@ -246,10 +247,14 @@ export default {
     return {
       'isLogin': !!storage.get(ACCESS_TOKEN),
       'category': [],
-      'site_meta': {}
+      'site_meta': {},
+      getImg
     }
   },
   created () {
+    if (this.isLogin) {
+      this.GetInfo()
+    }
     this.getSetting()
     getCategoryList({
       'son': 0,
@@ -273,7 +278,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['Logout']),
+    ...mapActions(['Logout', 'GetInfo']),
     Logouts () {
       this.Logout().then(() => {
         this.$message.success('退出成功')

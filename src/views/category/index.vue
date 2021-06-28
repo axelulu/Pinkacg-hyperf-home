@@ -72,7 +72,7 @@
                             <time
                             class="entry-date"
                             :datetime="v.updated_at"
-                            title="6小时前">{{ v.updated_at }}</time>
+                            :title="v.updated_at">{{ diaplayTime(v.updated_at) }}</time>
                           </span>
                           <span class="comments-link text-muted pull-right">
                             <i class="far fa-comment"></i>
@@ -99,7 +99,7 @@
 
 <script>
 import { getPostList } from '@/api/post'
-import { getImg } from '@/utils/util'
+import { getImg, diaplayTime } from '@/utils/util'
 import { getCategoryList } from '@/api/category'
 
 export default {
@@ -110,7 +110,8 @@ export default {
       categoryMeta: {},
       orderBy: 'id',
       posts: [],
-      getImg
+      getImg,
+      diaplayTime
     }
   },
   metaInfo () {

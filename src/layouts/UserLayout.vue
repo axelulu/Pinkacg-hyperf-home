@@ -56,13 +56,9 @@
                       <span
                         class='poi-form__group__inputs__content'>
                         <input
-                          type='email'
                           class='ghost_login_box_content_input user'
                           placeholder='您的电子邮件'
                           title='您的电子邮件'
-                          required=''
-                          tabindex='1'
-                          minlength='5'
                           v-model='login.username'>
                       </span>
                     </label>

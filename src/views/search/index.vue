@@ -6,7 +6,7 @@
           <label class='ghost_search_form_input_label'>
             <span class='poi-icon fa-search fas fa-fw' aria-hidden='true'></span>
           </label>
-          <a-input @pressEnter='Search' class='ghost_search_form_s' placeholder='您想搜索什么？' :value='$route.params.word'/></div>
+          <a-input @pressEnter='Search' class='ghost_search_form_s' placeholder='您想搜索什么？' v-model='word'/></div>
         <div class='ghost_search_form_cat_container'>
           <div class='ghost_search_form_group'>
             <span class='ghost_search_form_group_title'>分类 : </span>
@@ -59,13 +59,13 @@
                     <div class='entry-detail'>
                       <header class='entry-header'>
                         <h2 class='entry-title h4'>
-                          <router-link v-if='v.authorMeta' :to='"/author/" + v.authorMeta.id'>mkw</router-link>
+                          <router-link v-if='v.authorMeta' :to='"/author/" + v.authorMeta.id'>{{ v.title }}</router-link>
                         </h2>
                         <div class='entry-meta entry-meta-1'>
                           <span class='entry-date text-muted'><i class='fas fa-bell'></i><time
                             class='entry-date'
                             :datetime='v.updated_at'
-                            :title='v.updated_at'>{{ v.updated_at }}</time></span>
+                            :title='v.updated_at'>{{ diaplayTime(v.updated_at) }}</time></span>
                           <span class='comments-link text-muted pull-right'><i class='far fa-comment'></i>
                             <a>{{ v.comment_count }}</a></span>
                           <span class='views-count text-muted pull-right'><i class='fas fa-eye'></i>{{ v.views }}</span>
@@ -90,15 +90,17 @@
 <script>
 import { getCategoryList } from '@/api/category'
 import { getPostList } from '@/api/post'
-import { getImg } from '@/utils/util'
+import { getImg, diaplayTime } from '@/utils/util'
 
 export default {
   name: 'Index',
   data () {
     return {
+      word: '',
       categoryAll: {},
       posts: {},
-      getImg
+      getImg,
+      diaplayTime
     }
   },
   metaInfo () {
@@ -114,17 +116,13 @@ export default {
       'title': this.$route.params.word
     }).then((res) => {
       this.posts = res.result.data
+      this.word = this.$route.params.word
     })
   },
   methods: {
     Search () {
-      console.log(1212)
-      this.$router.push({
-        name: 'search',
-        params: {
-          word: this.$route.params.word
-        }
-      })
+      console.log(this.word)
+      this.$router.push({ path: '/search/' + this.word })
     }
   }
 }

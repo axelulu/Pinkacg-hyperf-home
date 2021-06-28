@@ -96,3 +96,40 @@ export function scorePassword (pass) {
 export function getImg (img) {
   return process.env.VUE_APP_API_BASE_SERVER_HOST + '/' + img
 }
+export function diaplayTime (data) {
+  const str = data
+  let result = ''
+  // 将字符串转换成时间格式
+  const timePublish = new Date(str)
+  const timeNow = new Date()
+  const minute = 1000 * 60
+  const hour = minute * 60
+  const day = hour * 24
+  const month = day * 30
+  const year = month * 12
+  const diffValue = timeNow - timePublish
+  const diffMonth = diffValue / month
+  const diffWeek = diffValue / (7 * day)
+  const diffDay = diffValue / day
+  const diffHour = diffValue / hour
+  const diffMinute = diffValue / minute
+  const diffYear = diffValue / year
+  if (diffValue < 0) {
+    result = '刚刚发表'
+  } else if (diffYear > 1) {
+    result = parseInt(diffYear) + '年前'
+  } else if (diffMonth > 1) {
+    result = parseInt(diffMonth) + '月前'
+  } else if (diffWeek > 1) {
+    result = parseInt(diffWeek) + '周前'
+  } else if (diffDay > 1) {
+    result = parseInt(diffDay) + '天前'
+  } else if (diffHour > 1) {
+    result = parseInt(diffHour) + '小时前'
+  } else if (diffMinute > 1) {
+    result = parseInt(diffMinute) + '分钟前'
+  } else {
+    result = '刚刚发表'
+  }
+  return result
+}

@@ -18,17 +18,18 @@ const errorHandler = (error) => {
     const data = error.response.data
     // 从 localstorage 获取 token
     const token = storage.get(ACCESS_TOKEN)
-    if (error.response.status === 403) {
+    if (error.response.code === 403) {
       notification.error({
         message: 'Forbidden',
         description: data.message
       })
     }
-    if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
+    if (data.code === 401 && !(data.result && data.result.isLogin)) {
       notification.error({
         message: 'Unauthorized',
         description: 'Authorization verification failed'
       })
+      console.log(token)
       if (token) {
         store.dispatch('Logout').then(() => {
           setTimeout(() => {
@@ -47,7 +48,7 @@ request.interceptors.request.use(config => {
   // 如果 token 存在
   // 让每个请求携带自定义 token 请根据实际情况自行修改
   if (token) {
-    config.headers['Access-Token'] = token
+    config.headers['Authorization'] = 'Bearer ' + token
   }
   return config
 }, errorHandler)

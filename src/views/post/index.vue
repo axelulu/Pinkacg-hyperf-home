@@ -13,7 +13,7 @@
             </span>
             <time datetime="2018-03-12 16:37:14" class="single_header_item ghost_single_date" title="3年前">
               <i class="fa-clock fas fa-fw poi-icon" aria-hidden="true"></i>
-              <span class="ghost_icon_text">{{ postMeta.updated_at }}</span>
+              <span class="ghost_icon_text">{{ diaplayTime(postMeta.updated_at) }}</span>
             </time>
             <router-link v-if='postMeta.authorMeta' :to="'/author/' + postMeta.authorMeta.id" :title="postMeta.authorMeta.name" class="single_header_item ghost_single_author">
               <i class="fa-user-circle fas fa-fw poi-icon" aria-hidden="true"></i> <span class="ghost_icon_text">{{ postMeta.authorMeta.name }}</span>
@@ -40,7 +40,6 @@
 
           <!-- 下载链接 -->
           <div v-if='postMeta.download_status' class="ghost_download_content">
-            <div>文章作者的链接:</div>
             <fieldset v-for='(v, k) in postMeta.download' :key='k' class="ghost_download_content_content">
               <legend class="ghost_download_content_name">
                 <span class="ghost_download_label_success">磁力链接</span></legend>
@@ -261,7 +260,7 @@
 <script>
 import { getPostList } from '@/api/post'
 import morePost from '@/views/post/morePost'
-import { getImg } from '@/utils/util'
+import { getImg, diaplayTime } from '@/utils/util'
 
 export default {
   name: 'Index',
@@ -276,7 +275,8 @@ export default {
   data () {
     return {
       'postMeta': {},
-      getImg
+      getImg,
+      diaplayTime
     }
   },
   created () {
@@ -293,7 +293,6 @@ export default {
             that.$message.error(res.message)
             return []
           }
-          console.log(res.result.data[0])
           this.postMeta = res.result.data[0]
         })
     }
