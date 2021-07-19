@@ -9,7 +9,6 @@
             height="340"
             :src="getImg(v.header_img)"
             class="lazy show"
-            alt="mkw"
             style="display: block;">
           </router-link>
           <ul class="post-categories">

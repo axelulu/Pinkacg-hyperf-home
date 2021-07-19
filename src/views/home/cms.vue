@@ -1,16 +1,16 @@
 <template>
-  <section :class='v.style === 1 ? "style-1" : v.style === 2 ? "style-2" : "style-1 container"' class='ghost_nav cat-col cat-col-full'>
+  <section :class='v.style === 1 ? "style-1" : v.style === 2 ? "style-2" : "style-1 container"' class='pinkacg_nav cat-col cat-col-full'>
     <div class='cat-container clearfix'>
-      <div class='ghost-homebox__header ghost-panel__header poi-panel__header'>
-        <h4 class='ghost-homebox__title ghost-panel__title poi-panel__title'>
+      <div class='pinkacg-homebox_header pinkacg-panel_header poi-panel_header'>
+        <h4 class='pinkacg-homebox_title pinkacg-panel_title poi-panel_title'>
           <router-link
             :to='"/category/" + v.menu'
-            class='ghost-homebox__title__link'>
-                <span class='ghost-homebox__title__icon__mask' style='color: #61b4ca'> <i
-                  class='fas fa-music poi-icon ghost-homebox__title__icon'
+            class='pinkacg-homebox_title_link'>
+                <span class='pinkacg-homebox_title_icon_mask' style='color: #61b4ca'> <i
+                  class='fas fa-music poi-icon pinkacg-homebox_title_icon'
                   aria-hidden='true'></i> </span> <span
             style='color:#000'
-            class='ghost-homebox__title__text'>{{ v.name }}</span>
+            class='pinkacg-homebox_title_text'>{{ v.name }}</span>
           </router-link>
         </h4>
         <span style='-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;'></span>
@@ -18,7 +18,7 @@
         <a @click="orderBy='comment_count'" :class='orderBy=="comment_count" ? "active " : ""' class='home_title_menu_item'>评论</a>
         <a @click="orderBy='views'" :class='orderBy=="views" ? "active " : ""' class='home_title_menu_item'>浏览</a>
       </div>
-      <div id='ghost_box_1' class='cms-cat cms-cat-s7'>
+      <div id='pinkacg_box_1' class='cms-cat cms-cat-s7'>
         <div v-for='(v, k) in categoryPost' :key='k' class='col-md-2 box-1 float-left'>
           <article id="post-78060" class="post type-post status-publish format-standard">
             <div class="entry-thumb hover-scale">
@@ -28,7 +28,6 @@
                   height="340"
                   :src="getImg(v.header_img)"
                   class="lazy show"
-                  alt="mkw"
                   style="display: block;"/>
               </router-link>
               <ul class="post-categories">
@@ -70,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div class='ghost_home_more_post'>
+    <div class='pinkacg_home_more_post'>
       <router-link class='more-post' :to='"/category/" + v.menu'>更多文章 <i class='tico tico-angle-right'></i></router-link>
     </div>
   </section>

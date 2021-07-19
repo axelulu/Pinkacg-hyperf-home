@@ -3,22 +3,22 @@
     <!-- 幻灯片 -->
     <section id='mod-show' class='content-section clearfix full'>
       <div id='popular'>
-        <div id='ghost-popular-container' class='ghost-popular-container'>
-          <div class='ghost-popular'>
+        <div id='pinkacg-popular-container' class='pinkacg-popular-container'>
+          <div class='pinkacg-popular'>
             <router-link
               v-for='(v, k) in popularPost'
               :key='k'
-              class='ghost-slideshow__item__link ghost-popular-link'
+              class='pinkacg-slideshow_item_link pinkacg-popular-link'
               :to='"/" + v.id + ".html"'
               style='background-color: rgba(225,225,225,.3);'>
               <img
                 :src='getImg(v.header_img)'
                 :alt='v.name'
-                class='lazy ghost-popular-img show'
+                class='lazy pinkacg-popular-img show'
                 style='background-color: rgb(245, 217, 215); display: inline;'>
-              <div class='ghost-popular-mask'></div>
-              <h3 class='ghost-popular-title'>
-                <span class='ghost-popular-text'>{{ v.name }}</span>
+              <div class='pinkacg-popular-mask'></div>
+              <h3 class='pinkacg-popular-title'>
+                <span class='pinkacg-popular-text'>{{ v.name }}</span>
               </h3>
             </router-link>
           </div>
@@ -26,7 +26,7 @@
       </div>
     </section>    <!-- 公告 -->
     <div class='container'>
-      <div class='ghost_site_notice'>
+      <div class='pinkacg_site_notice'>
       </div>
     </div>
     <div class='home'>
@@ -41,12 +41,12 @@
       </div>
     </div>
     <!--侧板工具-->
-    <div class='ghost_slide_wrap'>
-      <div id='ghost_slide' style='top: 24px;'>
-        <div class='ghost_tool'>
-          <a class='ghost_control' v-for='(v, k) in cms' :key='k'>
+    <div class='pinkacg_slide_wrap'>
+      <div id='pinkacg_slide' style='top: 24px;'>
+        <div class='pinkacg_tool'>
+          <a class='pinkacg_control' v-for='(v, k) in cms' :key='k'>
             <span class='poi-icon fas fa-music' aria-hidden='true'></span>
-            <span class='ghost_control_text'>{{ v.name }}</span>
+            <span class='pinkacg_control_text'>{{ v.name }}</span>
           </a>
           <div class='blue' style='top: 52px;'></div>
         </div>
@@ -68,18 +68,20 @@ export default {
   },
   metaInfo () {
     return {
-      title: '网站首页'
+      title: this.meta.seo_title + ' - ' + this.meta.seo_description
     }
   },
   data () {
     return {
       'cms': {},
+      'meta': {},
       'popularPost': {},
       getImg
     }
   },
   created () {
     this.getSetting()
+    this.getSiteMetaSetting()
     getPostList().then((res) => {
       this.popularPost = res.result.data
     })
@@ -96,6 +98,19 @@ export default {
           return []
         }
         this.cms = res.result.data[0].value
+      })
+    },
+    async getSiteMetaSetting () {
+      const that = this
+      await getSettingList({
+        'name': 'site_meta'
+      }).then(res => {
+        console.log(res)
+        if (res.code !== 200) {
+          that.$message.error(res.message)
+          return []
+        }
+        this.meta = res.result.data[0].value
       })
     }
   }

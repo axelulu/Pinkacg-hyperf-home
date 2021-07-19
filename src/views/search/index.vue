@@ -1,25 +1,25 @@
 <template>
   <div class='main'>
     <div class='search container'>
-      <div class='ghost_search_form'>
-        <div class='ghost_search_form_container'>
-          <label class='ghost_search_form_input_label'>
+      <div class='pinkacg_search_form'>
+        <div class='pinkacg_search_form_container'>
+          <label class='pinkacg_search_form_input_label'>
             <span class='poi-icon fa-search fas fa-fw' aria-hidden='true'></span>
           </label>
-          <a-input @pressEnter='Search' class='ghost_search_form_s' placeholder='您想搜索什么？' v-model='word'/></div>
-        <div class='ghost_search_form_cat_container'>
-          <div class='ghost_search_form_group'>
-            <span class='ghost_search_form_group_title'>分类 : </span>
-            <div class='ghost_search_form_condition_container'>
-              <div class='ghost_search_form_condition_group'>
-                <label v-for='(v, k) in categoryAll' :key='k' class='ghost_search_form_condition_label'>
+          <a-input @pressEnter='Search' class='pinkacg_search_form_s' placeholder='您想搜索什么？' v-model='word'/></div>
+        <div class='pinkacg_search_form_cat_container'>
+          <div class='pinkacg_search_form_group'>
+            <span class='pinkacg_search_form_group_title'>分类 : </span>
+            <div class='pinkacg_search_form_condition_container'>
+              <div class='pinkacg_search_form_condition_group'>
+                <label v-for='(v, k) in categoryAll' :key='k' class='pinkacg_search_form_condition_label'>
                   <input
                     type='radio'
                     hidden=''
                     :value='v.value'
                     checked=''>
                   <span
-                    class='ghost_search_form_condition_text is-checked'>{{ v.label }}</span>
+                    class='pinkacg_search_form_condition_text is-checked'>{{ v.label }}</span>
                 </label>
               </div>
               <div></div>
@@ -30,7 +30,7 @@
       <div class='search_box'>
         <section class='cat-2 cat-col cat-col-full'>
           <div class='cat-container clearfix'>
-            <div id='ghost_box_1' class='cms-cat cms-cat-s7'>
+            <div id='pinkacg_box_1' class='cms-cat cms-cat-s7'>
               <div class='page-1'>
                 <div v-for='(v, k) in posts' :key='k' class='col-md-2 box-2 float-left'>
                   <article id='post-78060' class='post type-post status-publish format-standard'>
@@ -74,7 +74,7 @@
                     </div>
                   </article>
                 </div>
-                <div class='ghost_other_more_post'>
+                <div class='pinkacg_other_more_post'>
                   <a data-paged='1' data-search='漫' class='more-post ajax-morepost'>更多文章 <i
                     class='tico tico-angle-right'></i></a>
                 </div>
