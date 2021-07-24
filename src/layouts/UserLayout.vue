@@ -38,8 +38,7 @@
                   <a
                      class='forget pinkacg_login_box_title_left_item'>丢失密码</a>
                 </div>
-                <a class='pinkacg_login_box_close'> <span class='poi-icon fa-times fas fa-fw' aria-hidden='true'></span>
-                </a></div>
+              </div>
             </header>
             <div class='pinkacg_login_box_content'>
               <div class='pinkacg_login_box_content_text'>

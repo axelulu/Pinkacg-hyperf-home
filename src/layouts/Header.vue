@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="scroll-header-menu container"><!-- 菜单 -->
-      <header id="scroll-header" class="header-menu">
+      <header class="header-menu">
         <div style="margin:0px auto" class="header white">
           <div class="pinkacg-header-logo">
             <div
@@ -37,10 +37,10 @@
               class="header-bg">
             </div>
           </div>
-          <nav id="header-nav" class="navigation clearfix" role="navigation">
+          <nav class="navigation clearfix" role="navigation">
 
             <div class="header-menu-div">
-              <ul id="menu-%e8%8f%9c%e5%8d%95" class="pinkacg_menu_ul">
+              <ul class="pinkacg_menu_ul">
                 <li>
                   <router-link to="/" style="padding: 10px 15px 10px 10px;font-size: 25px;"><i
                     class="catacg-mune-tubiao fas fa-home"> </i></router-link>
