@@ -316,7 +316,7 @@
                           <a-button
                             class="my_switch_msg pinkacg_setting_content_btn_success">
                             <span class="poi-icon fa-check fas fa-fw"></span>
-                            <span class="pinkacg_setting_content_text">更新选项</span></a-button>{{userId}}
+                            <span class="pinkacg_setting_content_text">更新选项</span></a-button>{{this.$store.getters.userInfo.id}}
                         </div>
                       </div>
                     </div>
@@ -371,7 +371,6 @@ export default {
         'email': ''
       },
       'userInfo': {},
-      'userId': this.$store.getters.userInfo.id,
       getImg
     }
   },
@@ -390,7 +389,7 @@ export default {
         }
         uploadAvatarImg({
           'avatar': res.result.data,
-          'id': this.userId
+          'id': this.$store.getters.userInfo.id
         }).then((res) => {
           if (res.code !== 200) {
             that.$message.error(res.message)
@@ -480,7 +479,7 @@ export default {
     getUserInfo () {
       const that = this
       getUserList({
-        'id': this.userId
+        'id': this.$store.getters.userInfo.id
       }).then((res) => {
         if (res.code !== 200) {
           that.$message.error(res.message)

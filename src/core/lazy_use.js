@@ -46,7 +46,8 @@ import {
   Space,
   message,
   notification,
-  FormModel
+  FormModel,
+  Cascader
 } from 'ant-design-vue'
 import Viser from 'viser-vue'
 
@@ -59,6 +60,7 @@ import PermissionHelper from '@/core/permission/permission'
 import './directives/action'
 import MetaInfo from 'vue-meta-info'
 
+Vue.use(Cascader)
 Vue.use(FormModel)
 Vue.use(MetaInfo)
 Vue.use(ConfigProvider)

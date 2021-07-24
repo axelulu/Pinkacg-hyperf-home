@@ -120,6 +120,12 @@ export const constantRouterMap = [
         name: 'lottery',
         meta: { permission: [true] },
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/lottery')
+      },
+      {
+        path: '/user/answer',
+        name: 'answer',
+        meta: { permission: [true] },
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/answer')
       }
     ]
   },
