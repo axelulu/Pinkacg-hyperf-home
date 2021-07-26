@@ -316,7 +316,7 @@
                           <a-button
                             class="my_switch_msg pinkacg_setting_content_btn_success">
                             <span class="poi-icon fa-check fas fa-fw"></span>
-                            <span class="pinkacg_setting_content_text">更新选项</span></a-button>{{this.$store.getters.userInfo.id}}
+                            <span class="pinkacg_setting_content_text">更新选项</span></a-button>
                         </div>
                       </div>
                     </div>

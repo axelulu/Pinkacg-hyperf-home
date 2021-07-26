@@ -21,11 +21,11 @@
       <!-- 排序 -->
       <div style="margin: 0px auto;margin-top: 0px;padding: 0px 5px 5px 5px;" class="header white crumb-container">
         <nav data-id="ost" class="paixu poi-crumb">
-          <a @click="orderBy='id'" :class='orderBy=="id" ? "is-active " : ""' class="pinkacg-paixu">按最新</a>
-          <a @click="orderBy='comment_count'" :class='orderBy=="comment_count" ? "is-active " : ""' class="pinkacg-paixu">按评论</a>
-          <a @click="orderBy='created_at'" :class='orderBy=="created_at" ? "is-active " : ""' class="pinkacg-paixu">按日期</a>
-          <a @click="orderBy='views'" :class='orderBy=="views" ? "is-active " : ""' class="pinkacg-paixu">按查看</a>
-          <a @click="orderBy='title'" :class='orderBy=="title" ? "is-active " : ""' class="pinkacg-paixu">随机</a>
+          <a @click="orderBy='id'" :class="orderBy=='id' ? 'is-active ' : ''" class="pinkacg-paixu">按最新</a>
+          <a @click="orderBy='comment_count'" :class="orderBy=='comment_count' ? 'is-active ' : ''" class="pinkacg-paixu">按评论</a>
+          <a @click="orderBy='created_at'" :class="orderBy=='created_at' ? 'is-active ' : ''" class="pinkacg-paixu">按日期</a>
+          <a @click="orderBy='views'" :class="orderBy=='views' ? 'is-active ' : ''" class="pinkacg-paixu">按查看</a>
+          <a @click="orderBy='title'" :class="orderBy=='title' ? 'is-active ' : ''" class="pinkacg-paixu">随机</a>
         </nav>
 
       </div>
@@ -35,7 +35,7 @@
           <div class="cat-container clearfix">
             <div id="pinkacg_box_1" class="cms-cat cms-cat-s7">
               <div class="single_posts">
-                <div v-for='(v, k) in posts' :key='k' class="col-md-2 box-2 float-left">
+                <div v-for="(v, k) in posts" :key="k" class="col-md-2 box-2 float-left">
                   <article id="post-78060" class="post type-post status-publish format-standard">
                     <div class="entry-thumb hover-scale">
                       <router-link :to="'/' + v.id + '.html'">
@@ -47,10 +47,10 @@
                           style="display: block;"/>
                       </router-link>
                       <ul class="post-categories">
-                        <li><router-link :to="'/category/' + v.menu" rel="category tag">{{ v.menu }}</router-link></li>
+                        <li v-for="(v, k) in v.menuMeta" :key="k"><router-link :to="'/category/' + v.value" rel="category tag">{{ v.label }}</router-link></li>
                       </ul>
                     </div>
-                    <router-link :to="'/author/' + v.authorMeta.id" target="_blank" class="post_box_avatar_link" :title="v.authorMeta.id">
+                    <router-link :to="'/author/' + v.authorMeta.id" class="post_box_avatar_link" :title="v.authorMeta.id">
                       <img
                         class="post_box_avatar_img"
                         :title="v.authorMeta.name"
@@ -69,9 +69,9 @@
                           <span class="entry-date text-muted">
                             <i class="fas fa-bell"></i>
                             <time
-                            class="entry-date"
-                            :datetime="v.updated_at"
-                            :title="v.updated_at">{{ diaplayTime(v.updated_at) }}</time>
+                              class="entry-date"
+                              :datetime="v.updated_at"
+                              :title="v.updated_at">{{ diaplayTime(v.updated_at) }}</time>
                           </span>
                           <span class="comments-link text-muted pull-right">
                             <i class="far fa-comment"></i>
@@ -109,6 +109,7 @@ export default {
       categoryMeta: {},
       orderBy: 'id',
       posts: [],
+      loading: false,
       getImg,
       diaplayTime
     }

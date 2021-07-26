@@ -2,6 +2,7 @@ import request from '@/utils/request'
 
 const userApi = {
   Login: '/auth/login',
+  Register: '/auth/register',
   Logout: '/auth/logout',
   GetData: '/auth/getData'
 }
@@ -20,6 +21,14 @@ const userApi = {
 export function login (parameter) {
   return request({
     url: userApi.Login,
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function register (parameter) {
+  return request({
+    url: userApi.Register,
     method: 'post',
     data: parameter
   })

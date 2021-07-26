@@ -126,6 +126,11 @@ export const constantRouterMap = [
         name: 'answer',
         meta: { permission: [true] },
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/answer')
+      },
+      {
+        path: '/refresh',
+        name: 'refresh',
+        component: () => import(/* webpackChunkName: "user" */ '@/views/refresh')
       }
     ]
   },

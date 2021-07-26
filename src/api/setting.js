@@ -14,3 +14,11 @@ export function updateSettingList (parameter) {
     data: parameter
   })
 }
+
+export function getCatSlug (parameter) {
+  return request({
+    url: '/tool/getCatSlug',
+    method: 'get',
+    params: parameter
+  })
+}

@@ -12,7 +12,8 @@
             style="display: block;">
           </router-link>
           <ul class="post-categories">
-            <li><router-link :to="'/category/' + v.menu" rel="category tag">{{ v.menu }}</router-link></li></ul>
+            <li v-for='(v, k) in v.menuMeta' :key='k'><router-link :to="'/category/' + v.value" rel="category tag">{{ v.label }}</router-link></li>
+          </ul>
         </div>
         <router-link :to="'/author/' + v.authorMeta.id" class="post_box_avatar_link" :title="v.authorMeta.id">
           <img

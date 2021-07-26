@@ -31,16 +31,101 @@
                 </legend>
                 <div class="pinkacg_setting_content_item_content">
                   <div class="pinkacg_setting_content_preface_item_content">
-                    <a @click='exchangePostType("post")' class="pinkacg_setting_content_btn routine_post" :class='model.type === "post" ? "is_success" : ""'>
+                    <a @click="exchangePostType('post')" class="pinkacg_setting_content_btn routine_post" :class="model.type === 'post' ? 'is_success' : ''">
                       <span class="poi-icon fa-check fas fa-fw" aria-hidden="true"></span>
-                      <span class="pinkacg_setting_content_text">文章</span></a>
-                    <a @click='exchangePostType("music")' class="pinkacg_setting_content_btn video_post" :class='model.type === "music" ? "is_success" : ""'>
+                      <span class="pinkacg_setting_content_text">文章</span>
+                    </a>
+                    <a @click="exchangePostType('video')" class="pinkacg_setting_content_btn video_post" :class="model.type === 'video' ? 'is_success' : ''">
                       <span class="poi-icon fa-check fas fa-fw" aria-hidden="true"></span>
-                      <span class="pinkacg_setting_content_text">视频</span></a>
-                    <a @click='exchangePostType("video")' class="pinkacg_setting_content_btn music_post" :class='model.type === "video" ? "is_success" : ""'>
+                      <span class="pinkacg_setting_content_text">视频</span>
+                    </a>
+                    <a @click="exchangePostType('music')" class="pinkacg_setting_content_btn music_post" :class="model.type === 'music' ? 'is_success' : ''">
                       <span class="poi-icon fa-check fas fa-fw" aria-hidden="true"></span>
-                      <span class="pinkacg_setting_content_text">音乐</span></a>
+                      <span class="pinkacg_setting_content_text">音乐</span>
+                    </a>
                   </div>
+                </div>
+              </fieldset>
+            </a-form-model-item>
+            <a-form-model-item v-if="model.type === 'music'">
+              <fieldset class="pinkacg_setting_content_item">
+                <legend class="pinkacg_setting_content_item_title">
+                  <span class="pinkacg_setting_content_primary">
+                    <span class="poi-icon fa-user-circle fas fa-fw" aria-hidden="true"></span>
+                    <span class="pinkacg_setting_content_text">音乐链接</span></span>
+                </legend>
+                <div class="pinkacg_setting_content_item_content">
+                  <a-form v-for="(k, v) in model.music" :key="v" class="clearfix pinkacg_download_link">
+                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                      <label class="pinkacg_download_link_group_inputs">
+                        <span class="pinkacg_download_link_inputs_icon">
+                          <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
+                        </span>
+                        <span class="pinkacg_download_link_inputs_content">
+                          <a-input v-model="k.name" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载名称" title="下载名称"/></span>
+                      </label>
+                    </a-form-model-item>
+                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                      <label class="pinkacg_download_link_group_inputs">
+                        <span class="pinkacg_download_link_inputs_icon">
+                          <span class="poi-icon fa-link fas fa-fw" aria-hidden="true"></span>
+                        </span>
+                        <span class="pinkacg_download_link_inputs_content">
+                          <a-input v-model="k.link" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载链接" title="下载链接"/></span>
+                      </label>
+                    </a-form-model-item>
+                    <div class="col-lg-1 float-left poi-g_lg-1-10">
+                      <div class="poi-btn-group pinkacg_download_link_storage_btns">
+                        <a @click="addMusic" class="link_add pinkacg_download_link_delete_btn">
+                          <span class="poi-icon fa-plus fas fa-fw" aria-hidden="true"></span>
+                        </a>
+                        <a @click="deleteMusic" style="color:gray;cursor: pointer;" class="pinkacg_download_link_delete_btn">
+                          <span class="poi-icon fa-trash fas fa-fw" aria-hidden="true"></span>
+                        </a>
+                      </div>
+                    </div>
+                  </a-form>
+                </div>
+              </fieldset>
+            </a-form-model-item>
+            <a-form-model-item v-if="model.type === 'video'">
+              <fieldset class="pinkacg_setting_content_item">
+                <legend class="pinkacg_setting_content_item_title">
+                  <span class="pinkacg_setting_content_primary">
+                    <span class="poi-icon fa-user-circle fas fa-fw" aria-hidden="true"></span>
+                    <span class="pinkacg_setting_content_text">视频链接</span></span>
+                </legend>
+                <div class="pinkacg_setting_content_item_content">
+                  <a-form v-for="(k, v) in model.video" :key="v" class="clearfix pinkacg_download_link">
+                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                      <label class="pinkacg_download_link_group_inputs">
+                        <span class="pinkacg_download_link_inputs_icon">
+                          <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
+                        </span>
+                        <span class="pinkacg_download_link_inputs_content">
+                          <a-input v-model="k.name" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载名称" title="下载名称"/></span>
+                      </label>
+                    </a-form-model-item>
+                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                      <label class="pinkacg_download_link_group_inputs">
+                        <span class="pinkacg_download_link_inputs_icon">
+                          <span class="poi-icon fa-link fas fa-fw" aria-hidden="true"></span>
+                        </span>
+                        <span class="pinkacg_download_link_inputs_content">
+                          <a-input v-model="k.link" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载链接" title="下载链接"/></span>
+                      </label>
+                    </a-form-model-item>
+                    <div class="col-lg-1 float-left poi-g_lg-1-10">
+                      <div class="poi-btn-group pinkacg_download_link_storage_btns">
+                        <a @click="addVideo" class="link_add pinkacg_download_link_delete_btn">
+                          <span class="poi-icon fa-plus fas fa-fw" aria-hidden="true"></span>
+                        </a>
+                        <a @click="deleteVideo" style="color:gray;cursor: pointer;" class="pinkacg_download_link_delete_btn">
+                          <span class="poi-icon fa-trash fas fa-fw" aria-hidden="true"></span>
+                        </a>
+                      </div>
+                    </div>
+                  </a-form>
                 </div>
               </fieldset>
             </a-form-model-item>
@@ -112,8 +197,8 @@
                           :src="getImgs(v.path + v.title + '.' + v.type)">
                       </div>
                       <div class="pictype">
-                        <span @click='insertImg(v)' class="pinkacg_btn pinkacg_btn_success">插入文章</span>
-                        <span @click='setHeaderImg(v, k)' :class='set_header_img === k ? "pinkacg_btn_success" : ""' class="pinkacg_btn">设为封面</span>
+                        <span @click="insertImg(v)" class="pinkacg_btn pinkacg_btn_success">插入文章</span>
+                        <span @click="setHeaderImg(v, k)" :class="set_header_img === k ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">设为封面</span>
                       </div>
                     </div>
                   </div>
@@ -168,9 +253,9 @@
                     <span class="pinkacg_setting_content_text">下载链接</span></span>
                 </legend>
                 <div class="pinkacg_setting_content_item_content pinkacg_download">
-                  <a @click='model.download_status = 1' style='width: 48%;margin:0px 1% 20px 1%;display: inline-block' :class='model.download_status ===1 ? "pinkacg_btn_success" : ""' class="pinkacg_btn">开启</a>
-                  <a @click='model.download_status = 0' style='width: 48%;margin:0px 1% 20px 1%;display: inline-block' :class='model.download_status ===0 ? "pinkacg_btn_success" : ""' class="pinkacg_btn">关闭</a>
-                  <a-form v-if='model.download_status' v-for="(k, v) in model.download" :key="v" class="clearfix pinkacg_download_link">
+                  <a @click="model.download_status = 1" style="width: 48%;margin:0px 1% 20px 1%;display: inline-block" :class="model.download_status ===1 ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">开启</a>
+                  <a @click="model.download_status = 0" style="width: 48%;margin:0px 1% 20px 1%;display: inline-block" :class="model.download_status ===0 ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">关闭</a>
+                  <a-form v-if="model.download_status" v-for="(k, v) in model.download" :key="v" class="clearfix pinkacg_download_link">
                     <a-form-model-item class="col-lg-2 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
@@ -231,18 +316,18 @@
               </fieldset>
             </a-form-model-item>
             <a-form-model-item>
-            <fieldset class="pinkacg_setting_content_item">
-              <legend class="pinkacg_setting_content_item_title">
+              <fieldset class="pinkacg_setting_content_item">
+                <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
                     <span class="poi-icon fa-user-circle fas fa-fw" aria-hidden="true"></span>
                     <span class="pinkacg_setting_content_text">评论状态</span>
                   </span>
-              </legend>
-              <div class="pinkacg_setting_content_item_content pinkacg_download">
-                <a @click='model.comment_status = 1' style='width: 48%;margin:0px 1% 20px 1%;display: inline-block' :class='model.comment_status ===1 ? "pinkacg_btn_success" : ""' class="pinkacg_btn">开启</a>
-                <a @click='model.comment_status = 0' style='width: 48%;margin:0px 1% 20px 1%;display: inline-block' :class='model.comment_status ===0 ? "pinkacg_btn_success" : ""' class="pinkacg_btn">关闭</a>
-              </div>
-            </fieldset>
+                </legend>
+                <div class="pinkacg_setting_content_item_content pinkacg_download">
+                  <a @click="model.comment_status = 1" style="width: 48%;margin:0px 1% 20px 1%;display: inline-block" :class="model.comment_status ===1 ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">开启</a>
+                  <a @click="model.comment_status = 0" style="width: 48%;margin:0px 1% 20px 1%;display: inline-block" :class="model.comment_status ===0 ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">关闭</a>
+                </div>
+              </fieldset>
             </a-form-model-item>
             <a-form-model-item>
               <fieldset class="pinkacg_setting_content_item">
@@ -259,8 +344,8 @@
                   </div>
                 </div>
               </fieldset>
-            </a-form-model-item>{{$store.getters.userInfo.id}}
-            <a @click='handleOk' style="padding: 8px;" data-type="newpost" class="submit_post pinkacg_setting_content_btn_success">
+            </a-form-model-item>
+            <a @click="handleOk" style="padding: 8px;" data-type="newpost" class="submit_post pinkacg_setting_content_btn_success">
               <span class="poi-icon fa-plus fas fa-fw" aria-hidden="true">提交</span>
             </a>
           </a-form-model>
@@ -410,6 +495,14 @@ export default {
           'pwd': '',
           'pwd2': '',
           'credit': ''
+        }],
+        'music': [{
+          'name': '',
+          'link': ''
+        }],
+        'video': [{
+          'name': '',
+          'link': ''
         }]
       }
     }
@@ -452,6 +545,33 @@ export default {
         this.model.download.splice(k, 1)
       } else {
         this.$message.warn('至少保留一个')
+      }
+    },
+    addMusic () {
+      this.model.music.push({
+        'name': '',
+        'link': ''
+      })
+    },
+    deleteMusic () {
+      if (this.model.music.length > 1) {
+        this.model.music.pop()
+      } else {
+        this.$message.warn('至少要保留一个')
+      }
+    },
+    addVideo () {
+      this.model.video.push({
+        'name': '',
+        'link': '',
+        'credit': ''
+      })
+    },
+    deleteVideo () {
+      if (this.model.video.length > 1) {
+        this.model.video.pop()
+      } else {
+        this.$message.warn('至少要保留一个')
       }
     },
     PostCategory () {

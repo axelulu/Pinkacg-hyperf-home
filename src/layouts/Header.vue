@@ -9,7 +9,7 @@
           <nav class="pinkacg-topbar">
             <ul class="menu">
               <li class="pinkacg-topbar-item is-icon-text">
-                <router-link :to="&quot;/&quot;" title="测试" target="_self">
+                <router-link :to="'/'" title="测试" target="_self">
                   <i
                     style="font-size: 1.2em;"
                     class="fas fa-2x poi-icon"></i>
@@ -27,7 +27,8 @@
         </div>
       </div>
     </div>
-    <div class="scroll-header-menu container"><!-- 菜单 -->
+    <div class="scroll-header-menu container">
+      <!-- 菜单 -->
       <header class="header-menu">
         <div style="margin:0px auto" class="header white">
           <div class="pinkacg-header-logo">
@@ -49,16 +50,16 @@
                   v-for="(v, k) in category"
                   :key="k"
                   class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-26519">
-                  <router-link :to="&quot;/category/&quot; + v.value">
-                    <i class="catacg-mune-tubiao fas fa-music"> </i>{{ v.label }}<i class="pinkacg-menu-posts-count" title="本周发布的">{{ v.num }}</i>
+                  <router-link :to="'/category/' + v.value">
+                    <i :class="'catacg-mune-tubiao ' + v.icon "> </i>{{ v.label }}<i class="pinkacg-menu-posts-count" title="本周发布的">{{ v.num }}</i>
                   </router-link>
                   <ul v-if="v.children" class="sub-menu">
                     <li
                       v-for="(v, k) in v.children"
                       :key="k"
                       class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26520">
-                      <router-link :to="&quot;/category/&quot; + v.value"><i class="catacg-mune-tubiao fas fa-video">
-                      </i>{{ v.label }}<i class="pinkacg-menu-posts-count" title="本周发布的">3</i>
+                      <router-link :to="'/category/' + v.value"><i :class="'catacg-mune-tubiao ' + v.icon ">
+                      </i> {{ v.label }}<i class="pinkacg-menu-posts-count" title="本周发布的">3</i>
                       </router-link>
                     </li>
                   </ul>
@@ -67,9 +68,12 @@
             </div>
             <div class="pinkacg-nav-tool_container">
               <div v-if="isLogin" class="pinkacg_sign_daily">
-                <a class="pinkacg_sign_daily_btn" title="未签到">
+                <a
+                  @click="$emit('signDaily', true)"
+                  class="pinkacg_sign_daily_btn"
+                  title="每日一冲">
                   <span class="poi-icon fa-map-marker fas fa-fw" aria-hidden="true"></span>
-                  <span class="poi-icon_text">未签到</span>
+                  <span class="poi-icon_text">每日一冲</span>
                 </a>
               </div>
               <li v-if="isLogin" class="login-actions">
@@ -210,6 +214,12 @@
                       </div>
                       <div class="pinkacg_user_menu_item_link_text">积分抽奖</div>
                     </router-link>
+                    <router-link to="/user/answer" title="答题得会员" class="pinkacg_user_menu_item_link">
+                      <div class="pinkacg_user_menu_item_link_icon">
+                        <i class="poi-icon fas fa-gem" aria-hidden="true"></i>
+                      </div>
+                      <div class="pinkacg_user_menu_item_link_text">答题得会员</div>
+                    </router-link>
                     <a @click="Logouts" title="注销账号" class="pinkacg_user_menu_item_link">
                       <div class="pinkacg_user_menu_item_link_icon">
                         <i class="poi-icon fas fa-sign-out-alt" aria-hidden="true"></i>
@@ -294,7 +304,7 @@ export default {
         this.$message.error('退出失败')
       }).finally(() => {
         setTimeout(() => {
-          window.location = '/'
+          location.reload()
         }, 1000)
       })
     },

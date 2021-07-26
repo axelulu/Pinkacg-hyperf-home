@@ -4,6 +4,7 @@ const api = {
   postList: '/post/index',
   postCreate: '/post/create',
   postUpdate: '/post/update',
+  purchase: '/purchase/create',
   postDelete: '/post/delete'
 }
 
@@ -37,5 +38,13 @@ export function deletePostList (parameter) {
   return request({
     url: api.postDelete + '/' + parameter.id,
     method: 'delete'
+  })
+}
+
+export function purchase (parameter) {
+  return request({
+    url: api.purchase,
+    method: 'post',
+    data: parameter
   })
 }

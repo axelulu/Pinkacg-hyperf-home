@@ -6,7 +6,7 @@ import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const allowList = ['post', 'search', 'author', 'category', 'home'] // no redirect allowList
+const allowList = ['post', 'search', 'author', 'category', 'home', 'refresh'] // no redirect allowList
 const loginRoutePath = '/'
 
 router.beforeEach((to, from, next) => {

@@ -61,7 +61,7 @@ const user = {
           commit('SET_NAME', { name: result.info.name, welcome: welcome() })
           commit('SET_AVATAR', result.info.avatar)
           commit('SET_INFO', result.info)
-
+          localStorage.setItem('user_id', result.info.id)
           resolve(response)
         }).catch(error => {
           reject(error)

@@ -16,7 +16,7 @@
                   <p>您可以在这个页面进行答题获取本站会员。</p>
                   <p>答题有时间限制且每日只能做5次，每次限时3分钟！</p>
                 </div>
-                <div class="pinkacg_notice_content_preface">
+                <div v-if='grade === -1' class="pinkacg_notice_content_preface">
                   <a-spin :spinning="loading">
                     <a-skeleton v-if='loading' active />
                     <div class="user_test">
@@ -79,6 +79,14 @@
                     </div>
                   </a-spin>
                 </div>
+                <div style='text-align: center' v-else-if='(answer === true && pass === false) || grade >= 0 && grade < 60'>
+                  <div style='margin: 20px' class="pinkacg_author_portal_item_content">答题完成，很抱歉，未通过！(每日只能答题一次！)</div>
+                  <div style='margin: 20px' class="pinkacg_author_portal_item_content">您的得分：{{ grade }}</div>
+                </div>
+                <div style='text-align: center' v-else-if='(answer === true && pass === true) || grade >= 60'>
+                  <div style='margin: 20px' class="pinkacg_author_portal_item_content">答题完成，恭喜您通过！已自动晋升为本站会员用户！</div>
+                  <div style='margin: 20px' class="pinkacg_author_portal_item_content">您的得分：{{ grade }}</div>
+                </div>
               </div>
             </fieldset>
           </div>
@@ -91,6 +99,7 @@
 <script>
 import userAside from '@/views/user/components/aside'
 import { getQuestionList, submitQuestionResult } from '@/api/question'
+import { getUserList } from '@/api/user'
 
 export default {
   name: 'Answer',
@@ -106,10 +115,19 @@ export default {
     return {
       model: [],
       loading: false,
-      questionList: []
+      questionList: [],
+      pass: false,
+      answer: false,
+      grade: 0,
+      user_id: localStorage.getItem('user_id')
     }
   },
   created () {
+    getUserList({
+      'id': this.user_id
+    }).then((res) => {
+      this.grade = res.result['data'][0]['answertest']
+    })
     this.loading = true
     getQuestionList({
       'answer': 1
@@ -127,7 +145,14 @@ export default {
     submitQuestionResult () {
       console.log(this.questionList)
       submitQuestionResult(this.questionList).then((res) => {
-        console.log(res)
+        this.answer = true
+        this.grade = res.result.grade
+        if (res.code === 200) {
+          this.$message.success('提交成功，得分：' + this.grade + ' 恭喜通过！')
+          this.pass = true
+        } else {
+          this.$message.info('提交成功，得分：' + this.grade + ' 未通过！')
+        }
       })
     }
   }

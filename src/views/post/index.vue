@@ -6,12 +6,12 @@
           <h1 class="pinkacg_single_title">{{ postMeta.title }}</h1>
           <header class="pinkacg_single_header">
             <span class="single_header_item pinkacg_single_category" title="分类">
-              <router-link v-if='postMeta.menuMeta' :to="'/category/' + postMeta.menuMeta.value">
+              <router-link v-if='postMeta.menuMeta' v-for='(v, k) in postMeta.menuMeta' :key='k' :to="'/category/' + v.value">
                 <i class="fa-folder-open fas fa-fw poi-icon" aria-hidden="true"></i>
-                <span class="pinkacg_icon_text">{{ postMeta.menuMeta.label }}</span>
+                <span class="pinkacg_icon_text">{{ v.label }}</span>
               </router-link>
             </span>
-            <time datetime="2018-03-12 16:37:14" class="single_header_item pinkacg_single_date" title="3年前">
+            <time :datetime="postMeta.updated_at" class="single_header_item pinkacg_single_date" :title="postMeta.updated_at">
               <i class="fa-clock fas fa-fw poi-icon" aria-hidden="true"></i>
               <span class="pinkacg_icon_text">{{ diaplayTime(postMeta.updated_at) }}</span>
             </time>
@@ -19,19 +19,19 @@
               <i class="fa-user-circle fas fa-fw poi-icon" aria-hidden="true"></i> <span class="pinkacg_icon_text">{{ postMeta.authorMeta.name }}</span>
             </router-link>
             <span class="single_header_item pinkacg_single_view" title="查看数">
-              <a href="javascript:void(0)">
+              <a>
                 <i class="fa-play-circle fas fa-fw poi-icon" aria-hidden="true"></i>
                 <span class="pinkacg_single_view_num">{{ postMeta.views }}</span>
               </a>
             </span>
             <span class="single_header_item pinkacg_single_comment_count" title="评论数">
-              <a href="javascript:void(0)">
+              <a>
                 <i class="fa-comments fas fa-fw poi-icon" aria-hidden="true"></i>
                 <span class="pinkacg_single_comment_count_num">{{ postMeta.comment_count }}</span>
               </a>
             </span>
             <span class="single_header_item " title="编辑文章">
-              <a href="https://mkw2023.com/?c=User&amp;m=editpost&amp;id=4422" target="_blank"><i class="poi-icon fas fa-paint-brush fa-fw" aria-hidden="true"></i>
+              <a href=""><i class="poi-icon fas fa-paint-brush fa-fw" aria-hidden="true"></i>
                 <span class="">编辑文章</span></a>
             </span>
           </header>
@@ -40,48 +40,83 @@
 
           <!-- 下载链接 -->
           <div v-if='postMeta.download_status' class="pinkacg_download_content">
+            <router-view ref='download'></router-view>
             <fieldset v-for='(v, k) in postMeta.download' :key='k' class="pinkacg_download_content_content">
-              <legend class="pinkacg_download_content_name">
-                <span class="pinkacg_download_label_success">磁力链接</span></legend>
-              <div class="pinkacg_download_content_item_download_pwd">
-                <div class="pinkacg_download_">
-                  <div class="col-lg-2 float-left">
-                    <div class="pinkacg_download_content_item_label">
-                      <span class="poi-icon fa-unlock-alt fas fa-fw" aria-hidden="true"></span>
-                      <span class="pinkacg_icon_text">提取密码</span></div>
-                  </div>
-                  <div style="padding-right:0px" class="col-lg-10 float-left">
-                    <div class="poi-btn-group">
-                      <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.name">
-                      <a class="pinkacg_btn pinkacg_btn_success pinkacg_btn_copy">
-                        <span class="poi-icon fa-copy fas fa-fw" aria-hidden="true"></span>
-                      </a>
+              <div v-if='v.link'>
+                <legend class="pinkacg_download_content_name">
+                  <span class="pinkacg_download_label_success">磁力链接</span></legend>
+                <div class="pinkacg_download_content_item_download_pwd">
+                  <div class="pinkacg_download_">
+                    <div class="col-lg-2 float-left">
+                      <div class="pinkacg_download_content_item_label">
+                        <span class="poi-icon fa-unlock-alt fas fa-fw" aria-hidden="true"></span>
+                        <span class="pinkacg_icon_text">提取密码</span></div>
+                    </div>
+                    <div style="padding-right:0px" class="col-lg-10 float-left">
+                      <div class="poi-btn-group">
+                        <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.name">
+                        <a class="pinkacg_btn pinkacg_btn_success pinkacg_btn_copy">
+                          <span class="poi-icon fa-copy fas fa-fw" aria-hidden="true"></span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="pinkacg_download_content_item_extract_pwd">
-                <div class="pinkacg_download_">
-                  <div class="col-lg-2 float-left">
-                    <div class="pinkacg_download_content_item_label">
-                      <span class="poi-icon fa-key fas fa-fw" aria-hidden="true"></span>
-                      <span class="pinkacg_icon_text">解压密码</span></div>
-                  </div>
-                  <div style="padding-right:0px" class="col-lg-10 float-left">
-                    <div class="poi-btn-group">
-                      <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.pwd">
-                      <a class="pinkacg_btn pinkacg_btn_success pinkacg_btn_copy">
-                        <span class="poi-icon fa-copy fas fa-fw" aria-hidden="true"></span>
-                      </a>
+                <div class="pinkacg_download_content_item_extract_pwd">
+                  <div class="pinkacg_download_">
+                    <div class="col-lg-2 float-left">
+                      <div class="pinkacg_download_content_item_label">
+                        <span class="poi-icon fa-key fas fa-fw" aria-hidden="true"></span>
+                        <span class="pinkacg_icon_text">解压密码</span></div>
+                    </div>
+                    <div style="padding-right:0px" class="col-lg-10 float-left">
+                      <div class="poi-btn-group">
+                        <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.pwd">
+                        <a class="pinkacg_btn pinkacg_btn_success pinkacg_btn_copy">
+                          <span class="poi-icon fa-copy fas fa-fw" aria-hidden="true"></span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div class="pinkacg_download_content_btn">
+                  <div class="poi-btn-group">
+                    <a :href="v.link" class="pinkacg_btn pinkacg_btn_success download" rel="noreferrer">
+                      <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
+                      <span class="pinkacg_icon_text">下载（如果点击无反应，可能是磁力链接）</span></a>
+                  </div>
+                </div>
               </div>
-              <div class="pinkacg_download_content_btn">
-                <div class="poi-btn-group">
-                  <a :href="v.link" class="pinkacg_btn pinkacg_btn_success download" rel="noreferrer" target="_blank">
-                    <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
-                    <span class="pinkacg_icon_text">下载（如果点击无反应，可能是磁力链接）</span></a>
+
+              <div v-if='postMeta.download.code === 400'>
+                <legend class="pinkacg_download_content_name">
+                  <span class="pinkacg_download_label_success">请登录</span>
+                </legend>
+                <div class="pinkacg_download_content_btn">
+                  <div class="poi-btn-group">
+                    <a @click='$emit("changeLogin", true)' class="pinkacg_btn pinkacg_btn_success download buy_download_link">
+                      <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
+                      <span class="pinkacg_icon_text">登录购买</span></a>
+                  </div>
+                </div>
+              </div>
+
+              <div v-else>
+                <legend class="pinkacg_download_content_name">
+                  <span class="pinkacg_download_label_success">请购买</span>
+                </legend>
+                <div class="pinkacg_root">
+                  <span data-v-97de44cc="" aria-hidden="true" class="poi-icon fa-unlock-alt fas fa-fw"></span>
+                  文章：<a class="pinkacg_root_key">{{ v.name }}</a>
+                  <span class="pinkacg_xinxi_text">下载所需积分：</span>
+                  <a class="pinkacg_root_key">{{ v.credit }}</a>
+                </div>
+                <div class="pinkacg_download_content_btn">
+                  <div class="poi-btn-group">
+                    <a @click='purchase(k, v)' class="pinkacg_btn pinkacg_btn_success download buy_download_link">
+                      <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
+                      <span class="pinkacg_icon_text">{{ v.credit }}积分购买</span></a>
+                  </div>
                 </div>
               </div>
             </fieldset>
@@ -131,7 +166,7 @@
               </div>
             </div>
             <ul class="single_post_footer_source">
-              <li> 本作品是由 <a href="https://pinkacg.com">粉萌次元</a> 会员 <a href="https://pinkacg.com/author/1">小宅酱</a> 的投递作品。 </li> <li>转载请务请署名并注明出处：<a href="https://pinkacg.com/78561.html" rel="nofollow">https://pinkacg.com/78561.html</a>。</li>
+              <li> 本作品是由 <router-link to="/">粉萌次元</router-link> 会员 <router-link :to="'/author/' + postMeta.authorMeta.id">小宅酱</router-link> 的投递作品。 </li> <li>转载请务请署名并注明出处。</li>
               <li>禁止再次修改后发布；任何商业用途均须联系作者。如未经授权用作他处，作者将保留追究侵权者法律责任的权利。</li>
             </ul>
           </footer>
@@ -258,7 +293,7 @@
 </template>
 
 <script>
-import { getPostList } from '@/api/post'
+import { getPostList, purchase } from '@/api/post'
 import morePost from '@/views/post/morePost'
 import { getImg, diaplayTime } from '@/utils/util'
 
@@ -283,6 +318,26 @@ export default {
     this.getPostMeta()
   },
   methods: {
+    purchase (k, v) {
+      purchase({
+        'user_id': this.$store.getters.userInfo.id,
+        'post_id': this.postMeta.id,
+        'download_key': k,
+        'credit': v.credit
+      }).then((res) => {
+        if (res.code === 200) {
+          this.$message.success('购买成功')
+          this.postMeta.download[k] = res.result.data
+          setTimeout(() => {
+            this.$router.replace({
+              'path': '/refresh'
+            })
+          }, 2000)
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
     async getPostMeta () {
       const that = this
       await getPostList({
