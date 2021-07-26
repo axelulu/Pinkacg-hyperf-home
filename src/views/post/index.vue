@@ -42,7 +42,7 @@
           <div v-if='postMeta.download_status' class="pinkacg_download_content">
             <router-view ref='download'></router-view>
             <fieldset v-for='(v, k) in postMeta.download' :key='k' class="pinkacg_download_content_content">
-              <div v-if='v.link'>
+              <div v-if='v.link && v.credit && v.name'>
                 <legend class="pinkacg_download_content_name">
                   <span class="pinkacg_download_label_success">磁力链接</span></legend>
                 <div class="pinkacg_download_content_item_download_pwd">
@@ -106,7 +106,7 @@
                   <span class="pinkacg_download_label_success">请购买</span>
                 </legend>
                 <div class="pinkacg_root">
-                  <span data-v-97de44cc="" aria-hidden="true" class="poi-icon fa-unlock-alt fas fa-fw"></span>
+                  <span aria-hidden="true" class="poi-icon fa-unlock-alt fas fa-fw"></span>
                   文章：<a class="pinkacg_root_key">{{ v.name }}</a>
                   <span class="pinkacg_xinxi_text">下载所需积分：</span>
                   <a class="pinkacg_root_key">{{ v.credit }}</a>

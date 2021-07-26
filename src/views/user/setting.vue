@@ -220,7 +220,7 @@
                     </div>
                   </a-form-model-item>
                   <a-form-model-item
-                    prop='newPassword'
+                    prop='confirmPassword'
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -350,16 +350,63 @@ export default {
   data () {
     return {
       'userInfoRules': {
-        name: [{ required: true, message: '请输入名称！' }],
-        desc: [{ required: true, message: '请输入描述！' }]
+        name: [{ required: true, message: '请输入名称！' }, { min: 4, message: '用户名不得小于4字符' }, { max: 15, message: '用户名不得超过15字符' }],
+        desc: [{ required: true, message: '请输入描述！' }, { min: 10, message: '描述不得小于10字符' }, { max: 50, message: '描述不得超过50字符' }]
       },
       'userEmailRules': {
-        email: [{ required: true, message: '请输入邮箱！' }],
-        myConfirm: [{ required: true, message: '请输入验证码！' }]
+        email: [
+          {
+            type: 'email',
+            message: '邮箱格式不正确'
+          },
+          {
+            max: 50,
+            message: '邮箱不得超过50字符'
+          }
+        ],
+        myConfirm: [
+          {
+            required: true,
+            message: '请输入验证码！'
+          },
+          {
+            min: 4,
+            message: '验证码不得小于4字符'
+          },
+          {
+            max: 4,
+            message: '验证码不得超过4字符'
+          }
+        ]
       },
       'userNewPasswordRules': {
-        oldPassword: [{ required: true, message: '请输入老密码！' }],
-        newPassword: [{ required: true, message: '请输入新密码！' }]
+        oldPassword: [
+          {
+            required: true,
+            message: '请输入你的密码!'
+          },
+          {
+            validator: this.validateToNextPassword
+          }
+        ],
+        confirmPassword: [
+          {
+            required: true,
+            message: '请确定你的密码!'
+          },
+          {
+            validator: this.compareToFirstPassword
+          }
+        ],
+        newPassword: [
+          {
+            required: true,
+            message: '请输入你的新密码!'
+          },
+          {
+            validator: this.validateToNextPassword
+          }
+        ]
       },
       'userNewPassword': {
         'password': '',
@@ -371,6 +418,7 @@ export default {
         'email': ''
       },
       'userInfo': {},
+      confirmDirty: false,
       getImg
     }
   },
@@ -378,6 +426,21 @@ export default {
     this.getUserInfo()
   },
   methods: {
+    validateToNextPassword (rule, value, callback) {
+      const form = this.form
+      if (value && this.confirmDirty) {
+        form.validateFields(['confirm'], { force: true })
+      }
+      callback()
+    },
+    compareToFirstPassword (rule, value, callback) {
+      const form = this.form
+      if (value && value !== form.getFieldValue('password')) {
+        callback('二次密码不一样!')
+      } else {
+        callback()
+      }
+    },
     getUploadAvatar (info, value) {
       const that = this
       const formData = new FormData()
@@ -397,13 +460,6 @@ export default {
           }
           that.$message.success(res.message)
         })
-        // if (value === 'avatar') {
-        //   that.avatarImg = res.result.link
-        //   that.model.avatar = res.result.data
-        // } else if (value === 'background') {
-        //   that.backgroundImg = res.result.link
-        //   that.model.background = res.result.data
-        // }
       })
     },
     beforeUpload (file) {

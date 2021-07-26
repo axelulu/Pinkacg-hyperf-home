@@ -50,25 +50,32 @@
               <div class="pinkacg_login_box_content_text">
                 <div>
                   <div><p>欢迎登录粉萌次元！</p></div>
-                  <div class="content">
-                    <div class="pinkacg_login_box_content_group"><label
-                      class="login_input pinkacg_login_box_content_inputs">
-                      <span
-                        class="pinkacg_login_box_content_inputs_icon">
+                  <a-form-model
+                    :model="login"
+                    :rules="loginRules"
+                    class="content">
+                    <a-form-model-item
+                      prop="username"
+                      class="pinkacg_login_box_content_group"><label
+                        class="login_input pinkacg_login_box_content_inputs">
                         <span
-                          class="poi-icon fa-user fas fa-fw"></span>
-                      </span>
-                      <span
-                        class="poi-form_group_inputs_content">
-                        <a-input
-                          class="pinkacg_login_box_content_input user"
-                          placeholder="您的电子邮件"
-                          title="您的电子邮件"
-                          v-model="login.username"/>
-                      </span>
-                    </label>
-                    </div>
-                    <div class="pinkacg_login_box_content_group">
+                          class="pinkacg_login_box_content_inputs_icon">
+                          <span
+                            class="poi-icon fa-user fas fa-fw"></span>
+                        </span>
+                        <span
+                          class="poi-form_group_inputs_content">
+                          <a-input
+                            class="pinkacg_login_box_content_input user"
+                            placeholder="您的用户名"
+                            title="您的用户名"
+                            v-model="login.username"/>
+                        </span>
+                      </label>
+                    </a-form-model-item>
+                    <a-form-model-item
+                      prop="password"
+                      class="pinkacg_login_box_content_group">
                       <label
                         class="login_input pinkacg_login_box_content_inputs">
                         <span
@@ -88,8 +95,8 @@
                             v-model="login.password"/>
                         </span>
                       </label>
-                    </div>
-                  </div>
+                    </a-form-model-item>
+                  </a-form-model>
                 </div>
               </div>
             </div>
@@ -97,8 +104,13 @@
               <div class="pinkacg_login_box_content_text">
                 <div>
                   <div><p>欢迎注册粉萌次元！</p></div>
-                  <div class="content">
-                    <div class="pinkacg_login_box_content_group">
+                  <a-form-model
+                    :model="register"
+                    :rules="registerRules"
+                    class="content">
+                    <a-form-model-item
+                      prop="username"
+                      class="pinkacg_login_box_content_group">
                       <label
                         class="login_input pinkacg_login_box_content_inputs">
                         <span
@@ -115,8 +127,10 @@
                             v-model="register.username"/>
                         </span>
                       </label>
-                    </div>
-                    <div class="pinkacg_login_box_content_group">
+                    </a-form-model-item>
+                    <a-form-model-item
+                      prop="email"
+                      class="pinkacg_login_box_content_group">
                       <label
                         class="login_input pinkacg_login_box_content_inputs">
                         <span
@@ -133,8 +147,10 @@
                             v-model="register.email"/>
                         </span>
                       </label>
-                    </div>
-                    <div class="pinkacg_login_box_content_group">
+                    </a-form-model-item>
+                    <a-form-model-item
+                      prop="password"
+                      class="pinkacg_login_box_content_group">
                       <label
                         class="login_input pinkacg_login_box_content_inputs">
                         <span
@@ -152,8 +168,8 @@
                             v-model="register.password"/>
                         </span>
                       </label>
-                    </div>
-                  </div>
+                    </a-form-model-item>
+                  </a-form-model>
                 </div>
               </div>
             </div>
@@ -222,6 +238,68 @@ export default {
   name: 'UserLayout',
   data () {
     return {
+      'loginRules': {
+        username: [
+          {
+            required: true,
+            message: '请输入用户名！',
+            whitespace: true
+          },
+          {
+            max: 50,
+            message: '用户名不得超过15字符'
+          },
+          {
+            min: 4,
+            message: '用户名不得小于4字符'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: '请输入你的密码!'
+          },
+          {
+            validator: this.validateToNextPassword
+          }
+        ]
+      },
+      'registerRules': {
+        username: [
+          {
+            required: true,
+            message: '请输入用户名！',
+            whitespace: true
+          },
+          {
+            max: 50,
+            message: '用户名不得超过15字符'
+          },
+          {
+            min: 4,
+            message: '用户名不得小于4字符'
+          }
+        ],
+        email: [
+          {
+            type: 'email',
+            message: '邮箱格式不正确'
+          },
+          {
+            max: 50,
+            message: '邮箱不得超过50字符'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: '请输入你的密码!'
+          },
+          {
+            validator: this.validateToNextPassword
+          }
+        ]
+      },
       'loginMod': true,
       'registerMod': false,
       'forgetMod': false,
@@ -238,6 +316,7 @@ export default {
         'email': '',
         'password': ''
       },
+      confirmDirty: false,
       state: {
         time: 60,
         loginBtn: false,
@@ -248,6 +327,13 @@ export default {
     }
   },
   methods: {
+    validateToNextPassword (rule, value, callback) {
+      const form = this.form
+      if (value && this.confirmDirty) {
+        form.validateFields(['confirm'], { force: true })
+      }
+      callback()
+    },
     changeLoginMod () {
       this.forgetMod = false
       this.loginMod = true
@@ -359,5 +445,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-
+.ant-form-item {
+  margin-bottom: 5px;
+}
 </style>

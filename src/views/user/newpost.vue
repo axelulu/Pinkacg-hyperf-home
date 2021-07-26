@@ -630,9 +630,6 @@ export default {
       })
     },
     handleOk () {
-      this.model.tag = JSON.stringify(this.model.tag)
-      this.model.menu = JSON.stringify(this.model.menu)
-      this.model.download = JSON.stringify(this.model.download)
       this.model.author = this.$store.getters.userInfo.id
       createPostList(this.model).then(res => {
         res.code === 200 ? this.$message.success(res.message) : this.$message.error(res.message)
