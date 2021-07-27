@@ -1,7 +1,7 @@
 <template>
   <div class="main single container">
     <div class="clearfix">
-      <div data-id="4422" class="article float-left col-lg-9">
+      <div class="article float-left col-lg-9">
         <article>
           <h1 class="pinkacg_single_title">{{ postMeta.title }}</h1>
           <header class="pinkacg_single_header">
@@ -42,7 +42,7 @@
           <div v-if='postMeta.download_status' class="pinkacg_download_content">
             <router-view ref='download'></router-view>
             <fieldset v-for='(v, k) in postMeta.download' :key='k' class="pinkacg_download_content_content">
-              <div v-if='v.link && v.credit && v.name'>
+              <div v-if='(v.link && v.credit && v.name) || v.link === ""'>
                 <legend class="pinkacg_download_content_name">
                   <span class="pinkacg_download_label_success">磁力链接</span></legend>
                 <div class="pinkacg_download_content_item_download_pwd">
@@ -88,7 +88,7 @@
                 </div>
               </div>
 
-              <div v-if='postMeta.download.code === 400'>
+              <div v-else-if='postMeta.download.code === 400'>
                 <legend class="pinkacg_download_content_name">
                   <span class="pinkacg_download_label_success">请登录</span>
                 </legend>
@@ -166,7 +166,7 @@
               </div>
             </div>
             <ul class="single_post_footer_source">
-              <li> 本作品是由 <router-link to="/">粉萌次元</router-link> 会员 <router-link :to="'/author/' + postMeta.authorMeta.id">小宅酱</router-link> 的投递作品。 </li> <li>转载请务请署名并注明出处。</li>
+              <li> 本作品是由 <router-link to="/">粉萌次元</router-link> 会员 <router-link v-if='postMeta.authorMeta' :to="'/author/' + postMeta.authorMeta.id">小宅酱</router-link> 的投递作品。 </li> <li>转载请务请署名并注明出处。</li>
               <li>禁止再次修改后发布；任何商业用途均须联系作者。如未经授权用作他处，作者将保留追究侵权者法律责任的权利。</li>
             </ul>
           </footer>
@@ -212,13 +212,13 @@
                 <div v-if='postMeta.authorMeta' class="pinkacg_author_meta">
                   <div class="pinkacg_author_widget_container">
                     <div class="pinkacg_author_widget_avatar">
-                      <router-link class="pinkacg_author_widget_avatar_link" :to="'/author/' + postMeta.authorMeta.id">
+                      <router-link v-if='postMeta.authorMeta' class="pinkacg_author_widget_avatar_link" :to="'/author/' + postMeta.authorMeta.id">
                         <img class="pinkacg_author_widget_avatar_img" width="150" height="150" :src="getImg(postMeta.authorMeta.avatar)" alt="站长菌">
                       </router-link>
                     </div>
                     <div class="pinkacg_author_widget_info">
                       <div class="pinkacg_author_widget_name_container">
-                        <router-link :to="'/author/' + postMeta.authorMeta.id" class="pinkacg_author_widget_name_link">{{ postMeta.authorMeta.name }}</router-link></div>
+                        <router-link v-if='postMeta.authorMeta' :to="'/author/' + postMeta.authorMeta.id" class="pinkacg_author_widget_name_link">{{ postMeta.authorMeta.name }}</router-link></div>
                       <div class="pinkacg_author_widget_group_container">
                         <div class="pinkacg_author_widget_group_uid" title="UID"></div>
                         <div class="pinkacg_author_widget_group_role" style="background-color: rgb(165, 132, 168);">{{ postMeta.authorMeta.desc }}</div></div>

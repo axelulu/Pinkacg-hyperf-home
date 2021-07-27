@@ -94,21 +94,23 @@ export default {
     }
   },
   created () {
-    this.loading = true
     this.getPosts()
   },
   watch: {
     orderBy () {
+      this.loading = true
       getPostList({
         'menu': this.v.menu,
         'orderBy': this.orderBy
       }).then((res) => {
         this.categoryPost = res.result.data
+        this.loading = false
       })
     }
   },
   methods: {
     async getPosts (menu) {
+      this.loading = true
       await getPostList({
         'menu': this.v.menu,
         'orderBy': this.orderBy

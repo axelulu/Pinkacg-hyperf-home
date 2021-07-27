@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
 const api = {
-  uploadAvatarImg: '/user/updateUserAvatar',
-  uploadPostFile: '/upload/uploadPostFile',
-  uploadFile: '/upload/uploadFile'
+  uploadAvatarImg: '/updateUserAvatar/create',
+  uploadPostFile: '/uploadPostFile/create',
+  uploadFile: '/uploadFile/create'
 }
 
 export default api

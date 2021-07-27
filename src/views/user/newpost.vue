@@ -4,7 +4,11 @@
       <user-aside></user-aside>
       <div class="col-md-10 float-right setting_box">
         <div class="pinkacg_setting_content">
-          <a-form-model class="drafts pinkacg_setting_content_container">
+          <a-form-model
+            :model="model"
+            ref="publishPost"
+            :rules="publishPostRules"
+            class="drafts pinkacg_setting_content_container">
             <a-form-model-item>
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
@@ -55,8 +59,11 @@
                     <span class="pinkacg_setting_content_text">音乐链接</span></span>
                 </legend>
                 <div class="pinkacg_setting_content_item_content">
-                  <a-form v-for="(k, v) in model.music" :key="v" class="clearfix pinkacg_download_link">
-                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                  <div v-for="(k, v) in model.music" :key="v" class="clearfix pinkacg_download_link">
+                    <a-form-model-item
+                      :prop="`music[${v}].name`"
+                      :rules="[ { required: true, message: '请输入音乐名称!' }, { min: 10, message: '音乐名称不得小于10字符' }, { max: 100, message: '音乐名称不得超过100字符' }]"
+                      class="col-lg-5 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
@@ -65,7 +72,10 @@
                           <a-input v-model="k.name" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载名称" title="下载名称"/></span>
                       </label>
                     </a-form-model-item>
-                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                    <a-form-model-item
+                      :prop="`music[${v}].link`"
+                      :rules="[ { required: true, message: '请输入音乐链接!' }, { min: 10, message: '音乐链接不得小于10字符' }, { max: 100, message: '音乐链接不得超过100字符' }]"
+                      class="col-lg-5 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-link fas fa-fw" aria-hidden="true"></span>
@@ -84,7 +94,7 @@
                         </a>
                       </div>
                     </div>
-                  </a-form>
+                  </div>
                 </div>
               </fieldset>
             </a-form-model-item>
@@ -96,8 +106,11 @@
                     <span class="pinkacg_setting_content_text">视频链接</span></span>
                 </legend>
                 <div class="pinkacg_setting_content_item_content">
-                  <a-form v-for="(k, v) in model.video" :key="v" class="clearfix pinkacg_download_link">
-                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                  <div v-for="(k, v) in model.video" :key="v" class="clearfix pinkacg_download_link">
+                    <a-form-model-item
+                      :prop="`video[${v}].name`"
+                      :rules="[ { required: true, message: '请输入视频名称!' }, { min: 10, message: '视频名称不得小于10字符' }, { max: 100, message: '视频名称不得超过100字符' }]"
+                      class="col-lg-3 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
@@ -106,14 +119,25 @@
                           <a-input v-model="k.name" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载名称" title="下载名称"/></span>
                       </label>
                     </a-form-model-item>
-                    <a-form-model-item class="col-lg-5 float-left poi-g_lg-2-10">
+                    <a-form-model-item
+                      :prop="`video[${v}].link`"
+                      :rules="[ { required: true, message: '请输入视频链接!' }, { min: 10, message: '视频链接不得小于10字符' }, { max: 100, message: '视频链接不得超过100字符' }]"
+                      class="col-lg-5 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-link fas fa-fw" aria-hidden="true"></span>
                         </span>
                         <span class="pinkacg_download_link_inputs_content">
-                          <a-input v-model="k.link" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载链接" title="下载链接"/></span>
+                          <a-input v-model="k.link" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载链接" title="下载链接"/>
+                        </span>
                       </label>
+                    </a-form-model-item>
+                    <a-form-model-item
+                      :prop="`video[${v}].credit`"
+                      :rules="[ { required: true, message: '请输入积分!' }]"
+                      class="col-lg-2 float-left poi-g_lg-2-10"
+                    >
+                      <a-input-number v-model="k.credit" placeholder="视频积分" style="margin-right: 3%"/>
                     </a-form-model-item>
                     <div class="col-lg-1 float-left poi-g_lg-1-10">
                       <div class="poi-btn-group pinkacg_download_link_storage_btns">
@@ -125,11 +149,12 @@
                         </a>
                       </div>
                     </div>
-                  </a-form>
+                  </div>
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a-form-model-item>
+            <a-form-model-item
+              prop="title">
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
@@ -142,7 +167,8 @@
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a-form-model-item>
+            <a-form-model-item
+              prop="excerpt">
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
@@ -155,7 +181,8 @@
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a-form-model-item>
+            <a-form-model-item
+              prop="content">
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
@@ -171,7 +198,8 @@
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a-form-model-item>
+            <a-form-model-item
+              prop="content_file">
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
@@ -196,16 +224,26 @@
                         <img
                           :src="getImgs(v.path + v.title + '.' + v.type)">
                       </div>
-                      <div class="pictype">
-                        <span @click="insertImg(v)" class="pinkacg_btn pinkacg_btn_success">插入文章</span>
-                        <span @click="setHeaderImg(v, k)" :class="set_header_img === k ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">设为封面</span>
-                      </div>
+                      <a-form-model-item
+                        prop="header_img"
+                        :rules="[ { required: true, message: '请输入网站封面!' }]"
+                      >
+                        <div class="pictype">
+                          <span @click="insertImg(v)" class="pinkacg_btn pinkacg_btn_success">插入文章</span>
+                          <a-button
+                            v-model="model.header_img"
+                            @click="setHeaderImg(v, k)"
+                            :class="set_header_img === k ? 'pinkacg_btn_success' : ''"
+                            class="pinkacg_btn">设为封面</a-button>
+                        </div>
+                      </a-form-model-item>
                     </div>
                   </div>
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a-form-model-item>
+            <a-form-model-item
+              prop="menu">
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
@@ -223,7 +261,8 @@
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a-form-model-item>
+            <a-form-model-item
+              prop="tag">
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
@@ -233,7 +272,11 @@
                 <div class="pinkacg_setting_content_item_content">
                   <div class="pinkacg_post_tag_inputs">
                     <div v-for="(v, k) in model.tag" :key="k" class="poi-btn-group pinkacg_post_tag_inputs_container">
-                      <a-input v-model="(model.tag)[k]" class="pinkacg_setting_content_preface_control pinkacg_post_tag_input" placeholder="帖子标签"/>
+                      <a-form-model-item
+                        :prop="`tag[${k}]`"
+                        :rules="[ { required: true, message: '请输入下载链接标题!' }, { min: 3, message: '下载链接标题不得小于3字符' }, { max: 20, message: '文章标题不得超过20字符' }]">
+                        <a-input v-model="(model.tag)[k]" class="pinkacg_setting_content_preface_control pinkacg_post_tag_input" placeholder="帖子标签"/>
+                      </a-form-model-item>
                       <a @click="delTag(k)" style="cursor: pointer;" class="poi-btn poi-btn_default pinkacg_post_tag_input_btn">
                         <span class="poi-icon fa-trash fas fa-fw" aria-hidden="true"></span>
                       </a>
@@ -255,8 +298,11 @@
                 <div class="pinkacg_setting_content_item_content pinkacg_download">
                   <a @click="model.download_status = 1" style="width: 48%;margin:0px 1% 20px 1%;display: inline-block" :class="model.download_status ===1 ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">开启</a>
                   <a @click="model.download_status = 0" style="width: 48%;margin:0px 1% 20px 1%;display: inline-block" :class="model.download_status ===0 ? 'pinkacg_btn_success' : ''" class="pinkacg_btn">关闭</a>
-                  <a-form v-if="model.download_status" v-for="(k, v) in model.download" :key="v" class="clearfix pinkacg_download_link">
-                    <a-form-model-item class="col-lg-2 float-left poi-g_lg-2-10">
+                  <div v-if="model.download_status" v-for="(k, v) in model.download" :key="v" class="clearfix pinkacg_download_link">
+                    <a-form-model-item
+                      :prop="`download[${v}].name`"
+                      :rules="[ { required: true, message: '请输入下载链接标题!' }, { min: 3, message: '下载链接标题不得小于3字符' }, { max: 20, message: '文章标题不得超过20字符' }]"
+                      class="col-lg-2 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-cloud-download-alt fas fa-fw" aria-hidden="true"></span>
@@ -265,7 +311,10 @@
                           <a-input v-model="k.name" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载名称" title="下载名称"/></span>
                       </label>
                     </a-form-model-item>
-                    <a-form-model-item class="col-lg-3 float-left poi-g_lg-2-10">
+                    <a-form-model-item
+                      :prop="`download[${v}].link`"
+                      :rules="[ { required: true, message: '请输入下载链接!' }, { min: 10, message: '下载链接不得小于10字符' }, { max: 100, message: '下载链接不得超过100字符' }]"
+                      class="col-lg-3 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-link fas fa-fw" aria-hidden="true"></span>
@@ -274,7 +323,9 @@
                           <a-input v-model="k.link" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="下载链接" title="下载链接"/></span>
                       </label>
                     </a-form-model-item>
-                    <a-form-model-item class="col-lg-2 float-left poi-g_lg-1-10">
+                    <a-form-model-item
+                      :prop="`download[${v}].pwd`"
+                      class="col-lg-2 float-left poi-g_lg-1-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-key fas fa-fw" aria-hidden="true"></span>
@@ -283,7 +334,9 @@
                           <a-input v-model="k.pwd" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="提取密码" title="提取密码"/></span>
                       </label>
                     </a-form-model-item>
-                    <a-form-model-item class="col-lg-2 float-left poi-g_lg-1-10">
+                    <a-form-model-item
+                      :prop="`download[${v}].pwd2`"
+                      class="col-lg-2 float-left poi-g_lg-1-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-unlock fas fa-fw" aria-hidden="true"></span>
@@ -292,7 +345,10 @@
                           <a-input v-model="k.pwd2" class="pinkacg_setting_content_preface_control_downloadlink " type="text" placeholder="解压密码" title="解压密码"/></span>
                       </label>
                     </a-form-model-item>
-                    <a-form-model-item class="col-lg-2 float-left poi-g_lg-1-10">
+                    <a-form-model-item
+                      :prop="`download[${v}].credit`"
+                      :rules="[{ validator: checkCredit }]"
+                      class="col-lg-2 float-left poi-g_lg-1-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
                           <span class="poi-icon fa-unlock fas fa-fw" aria-hidden="true"></span>
@@ -311,11 +367,12 @@
                         </a>
                       </div>
                     </div>
-                  </a-form>
+                  </div>
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a-form-model-item>
+            <a-form-model-item
+              prop="comment_status">
               <fieldset class="pinkacg_setting_content_item">
                 <legend class="pinkacg_setting_content_item_title">
                   <span class="pinkacg_setting_content_primary">
@@ -457,6 +514,64 @@ export default {
   },
   data () {
     return {
+      'publishPostRules': {
+        title: [
+          {
+            required: true,
+            message: '请输入文章标题!'
+          },
+          {
+            min: 5,
+            message: '文章标题不得小于5字符'
+          },
+          {
+            max: 100,
+            message: '文章标题不得超过100字符'
+          }
+        ],
+        excerpt: [
+          {
+            required: true,
+            message: '请输入文章摘要!'
+          },
+          {
+            min: 10,
+            message: '文章摘要不得小于10字符'
+          },
+          {
+            max: 200,
+            message: '文章摘要不得超过200字符'
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: '请输入文章内容!'
+          },
+          {
+            min: 50,
+            message: '文章内容不得小于20字符'
+          },
+          {
+            max: 10000,
+            message: '文章内容不得超过10000字符'
+          }
+        ],
+        content_file: [
+          {
+            type: 'array',
+            required: true,
+            message: '请输入文章图片!'
+          }
+        ],
+        menu: [
+          {
+            type: 'array',
+            required: true,
+            message: '请输入文章菜单!'
+          }
+        ]
+      },
       set_header_img: null,
       editorOption: {
         placeholder: '请在这里输入', // 提示
@@ -483,7 +598,7 @@ export default {
         'author': null,
         'type': 'post',
         'content_file': [],
-        'tag': ['12'],
+        'tag': [],
         'comment_status': 1,
         'comment_count': 0,
         'views': 0,
@@ -511,17 +626,28 @@ export default {
     this.PostCategory()
   },
   methods: {
+    checkCredit (rule, value, callback) {
+      if (value > 0 && value < 21) {
+        callback()
+        return
+      }
+      callback('积分必须在1到20之间!')
+    },
     exchangePostType (v) {
       this.model.type = v
     },
     setHeaderImg (v, k) {
-      this.model.header_img = v
+      this.model.header_img = k
       this.set_header_img = k
     },
     getImgs (k) {
       return getImg(k)
     },
     addTag () {
+      if (this.model.tag.length > 4) {
+        this.$message.warn('最多发布五个')
+        return
+      }
       this.model.tag.push('')
     },
     delTag (k) {
@@ -532,6 +658,10 @@ export default {
       }
     },
     addDownload () {
+      if (this.model.download.length > 9) {
+        this.$message.warn('最多发布十个')
+        return
+      }
       this.model.download.push({
         'name': '',
         'link': '',
@@ -548,6 +678,10 @@ export default {
       }
     },
     addMusic () {
+      if (this.model.music.length > 9) {
+        this.$message.warn('最多发布十个')
+        return
+      }
       this.model.music.push({
         'name': '',
         'link': ''
@@ -561,6 +695,10 @@ export default {
       }
     },
     addVideo () {
+      if (this.model.video.length > 9) {
+        this.$message.warn('最多发布十个')
+        return
+      }
       this.model.video.push({
         'name': '',
         'link': '',
@@ -620,6 +758,8 @@ export default {
         }
         const length = quill.getSelection().index
         // 插入图片，res为服务器返回的图片链接地址
+        console.log(process.env.VUE_APP_API_BASE_SERVER_HOST)
+        console.log(res.result.link)
         quill.insertEmbed(length, 'image', getImg(res.result.link))
         // 调整光标到最后
         quill.setSelection(length + 1)
@@ -630,9 +770,15 @@ export default {
       })
     },
     handleOk () {
-      this.model.author = this.$store.getters.userInfo.id
-      createPostList(this.model).then(res => {
-        res.code === 200 ? this.$message.success(res.message) : this.$message.error(res.message)
+      this.$refs.publishPost.validate(valid => {
+        if (valid) {
+          this.model.author = this.$store.getters.userInfo.id
+          createPostList(this.model).then(res => {
+            res.code === 200 ? this.$message.success(res.message) : this.$message.error(res.message)
+          })
+        } else {
+          return false
+        }
       })
     }
   }
@@ -662,5 +808,8 @@ export default {
 }
 .ant-form-item {
   margin-bottom: 0px;
+}
+.ant-input:placeholder-shown {
+  border-radius: 1rem;
 }
 </style>

@@ -220,7 +220,7 @@
                     </div>
                   </a-form-model-item>
                   <a-form-model-item
-                    prop='confirmPassword'
+                    prop='newPassword'
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -237,8 +237,8 @@
                       </div>
                     </div>
                   </a-form-model-item>
-                  <div
-                    prop='newPassword'
+                  <a-form-model-item
+                    prop='confirmPassword'
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -254,7 +254,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </a-form-model-item>
                   <div class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">

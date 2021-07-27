@@ -34,38 +34,39 @@
         <section class="cat-2 cat-col cat-col-full">
           <div class="cat-container clearfix">
             <div id="pinkacg_box_1" class="cms-cat cms-cat-s7">
-              <div class="single_posts">
-                <div v-for="(v, k) in posts" :key="k" class="col-md-2 box-2 float-left">
-                  <article id="post-78060" class="post type-post status-publish format-standard">
-                    <div class="entry-thumb hover-scale">
-                      <router-link :to="'/' + v.id + '.html'">
+              <a-spin :spinning='loading'>
+                <div class="single_posts">
+                  <div v-for="(v, k) in posts" :key="k" class="col-md-2 box-2 float-left">
+                    <article id="post-78060" class="post type-post status-publish format-standard">
+                      <div class="entry-thumb hover-scale">
+                        <router-link :to="'/' + v.id + '.html'">
+                          <img
+                            width="500"
+                            height="340"
+                            :src="getImg(v.header_img)"
+                            class="lazy show"
+                            style="display: block;"/>
+                        </router-link>
+                        <ul class="post-categories">
+                          <li v-for="(v, k) in v.menuMeta" :key="k"><router-link :to="'/category/' + v.value" rel="category tag">{{ v.label }}</router-link></li>
+                        </ul>
+                      </div>
+                      <router-link :to="'/author/' + v.authorMeta.id" class="post_box_avatar_link" :title="v.authorMeta.id">
                         <img
-                          width="500"
-                          height="340"
-                          :src="getImg(v.header_img)"
-                          class="lazy show"
-                          style="display: block;"/>
+                          class="post_box_avatar_img"
+                          :title="v.authorMeta.name"
+                          :src="getImg(v.authorMeta.avatar)"
+                          width="50"
+                          height="50"
+                          :alt="v.authorMeta.name">
+                        <span class="post_box_avatar_author_name">{{ v.authorMeta.name }}</span>
                       </router-link>
-                      <ul class="post-categories">
-                        <li v-for="(v, k) in v.menuMeta" :key="k"><router-link :to="'/category/' + v.value" rel="category tag">{{ v.label }}</router-link></li>
-                      </ul>
-                    </div>
-                    <router-link :to="'/author/' + v.authorMeta.id" class="post_box_avatar_link" :title="v.authorMeta.id">
-                      <img
-                        class="post_box_avatar_img"
-                        :title="v.authorMeta.name"
-                        :src="getImg(v.authorMeta.avatar)"
-                        width="50"
-                        height="50"
-                        :alt="v.authorMeta.name">
-                      <span class="post_box_avatar_author_name">{{ v.authorMeta.name }}</span>
-                    </router-link>
-                    <div class="entry-detail">
-                      <header class="entry-header">
-                        <h2 class="entry-title h4">
-                          <router-link :to="'/' + v.id + '.html'" rel="bookmark">{{ v.title }}</router-link>
-                        </h2>
-                        <div class="entry-meta entry-meta-1">
+                      <div class="entry-detail">
+                        <header class="entry-header">
+                          <h2 class="entry-title h4">
+                            <router-link :to="'/' + v.id + '.html'" rel="bookmark">{{ v.title }}</router-link>
+                          </h2>
+                          <div class="entry-meta entry-meta-1">
                           <span class="entry-date text-muted">
                             <i class="fas fa-bell"></i>
                             <time
@@ -73,20 +74,21 @@
                               :datetime="v.updated_at"
                               :title="v.updated_at">{{ diaplayTime(v.updated_at) }}</time>
                           </span>
-                          <span class="comments-link text-muted pull-right">
+                            <span class="comments-link text-muted pull-right">
                             <i class="far fa-comment"></i>
                             <router-link :to="'/' + v.id + '.html'">{{ v.comment_count }}</router-link>
                           </span>
-                          <span class="views-count text-muted pull-right"><i class="fas fa-eye"></i>{{ v.view }}</span>
-                        </div>
-                      </header>
-                    </div>
-                  </article>
+                            <span class="views-count text-muted pull-right"><i class="fas fa-eye"></i>{{ v.view }}</span>
+                          </div>
+                        </header>
+                      </div>
+                    </article>
+                  </div>
                 </div>
-                <div class="pinkacg_other_more_post">
-                  <a data-paged="0" data-cat="ost" class="more-post ajax-morepost">更多文章 <i
-                    class="tico tico-angle-right"></i></a>
-                </div>
+              </a-spin>
+              <div class="pinkacg_other_more_post">
+                <a data-paged="0" data-cat="ost" class="more-post ajax-morepost">更多文章 <i
+                  class="tico tico-angle-right"></i></a>
               </div>
             </div>
           </div>
@@ -121,15 +123,18 @@ export default {
   },
   watch: {
     orderBy () {
+      this.loading = true
       getPostList({
         'menu': this.category,
         'orderBy': this.orderBy
       }).then((res) => {
         this.posts = res.result.data
+        this.loading = false
       })
     }
   },
   created () {
+    this.loading = true
     getCategoryList({
       'value': this.category
     }).then((res) => {
@@ -140,6 +145,7 @@ export default {
       'orderBy': this.orderBy
     }).then((res) => {
       this.posts = res.result.data
+      this.loading = false
     })
   }
 }
