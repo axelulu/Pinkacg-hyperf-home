@@ -144,13 +144,13 @@
                   <i class="fa-bold fas fa-fw poi-icon" aria-hidden="true"></i>
                 </a>
               </div>
-              <div id="pinkacg-report" class="single_post_footer_report">
+              <div class="single_post_footer_report">
                 <div class="pinkacg_report single_post_footer_container">
                   <a class="single_post_footer_btn"><span class="poi-icon fa-paperclip fas fa-fw" aria-hidden="true"></span> <span class="pinkacg_icon_text">链接失效</span></a>
                 </div>
               </div>
-              <div id="pinkacg-add_link" class="single_post_footer_report">
-                <div data-userid="1" class="pinkacg_add_link single_post_footer_container">
+              <div class="single_post_footer_report">
+                <div class="pinkacg_add_link single_post_footer_container">
                   <a class="single_post_footer_btn"><span class="poi-icon fa-link fas fa-fw" aria-hidden="true"></span> <span class="pinkacg_icon_text">帮他补链</span></a>
                 </div>
               </div>
@@ -175,7 +175,7 @@
         <!-- 底部文章模块 -->
         <section>
           <div class="cat-container clearfix">
-            <div id="pinkacg_box_1" class="cms-cat cms-cat-s7">
+            <div class="pinkacg_box_1 cms-cat cms-cat-s7">
               <morePost v-if='postMeta.menuMeta' :k='postMeta.menuMeta.value'></morePost>
             </div>
           </div>
@@ -184,7 +184,7 @@
         <!-- 评论 -->
         <aside>
           <div class="pinkacg_comment">
-            <div data-userid="147" class="join_comments pinkacg_comment_faker">
+            <div class="join_comments pinkacg_comment_faker">
               <img class="pinkacg_comment_faker_avatar" src="https://mkw2023.com/tp/8707097.png" alt="avatar" width="18" height="18">
               <span class="pinkacg_comment_text">点击参与讨论！</span></div>
             <h2 class="pinkacg_comment_title">
@@ -199,7 +199,7 @@
 
         <!--weight-->
       <div class="weight float-right col-lg-3">
-        <aside id="pinkacg_widget" class="pinkacg_widget">
+        <aside class="pinkacg_widget">
           <div class="pinkacg_widget_content">
             <div class="widget_pinkacg_author">
 
@@ -255,7 +255,7 @@
                 </div>
               </div>
               <div class="widget_pinkacg_hot_post">
-                <div id="pinkacg_hot_post" class="pinkacg_hot_post">
+                <div class="pinkacg_hot_post">
                   <h3 class="pinkacg_hot_post_title">
                     <span>
                       <i class="fas fa-eye"></i>
@@ -269,7 +269,6 @@
                             <img
                               class="pinkacg_hot_post_item_container_img"
                               src="https://mkw2023.com/tp/578f.png"
-                              data-original="https://fontawesome.catacg.cn/post_img/1/2020/07/1-de66f060395e2159ed537973c123029a.jpg"
                               alt="我试试发帖可以获得多少奖励"
                               width="320"
                               height="180"

@@ -1,9 +1,9 @@
 <template>
   <div class="main" ref='viewBox'>
     <!-- 幻灯片 -->
-    <section id="mod-show" class="content-section clearfix full">
-      <a-spin :spinning="loading" id="popular">
-        <div id="pinkacg-popular-container" class="pinkacg-popular-container">
+    <section class="content-section clearfix full">
+      <a-spin :spinning="loading">
+        <div class="pinkacg-popular-container">
           <div class="pinkacg-popular">
             <router-link
               v-for="(v, k) in popularPost"
@@ -115,7 +115,6 @@ export default {
       await getSettingList({
         'name': 'site_cms'
       }).then(res => {
-        console.log(res)
         if (res.code !== 200) {
           that.$message.error(res.message)
           return []
@@ -128,7 +127,6 @@ export default {
       await getSettingList({
         'name': 'site_meta'
       }).then(res => {
-        console.log(res)
         if (res.code !== 200) {
           that.$message.error(res.message)
           return []
@@ -152,5 +150,7 @@ export default {
 </script>
 
 <style scoped>
-
+.headbox3 {
+  background: url(https://fontawesome.catacg.cn/post_img/1/2020/07/1-dee60980702ee0fade4a63218660ecd7.jpg) no-repeat center;
+}
 </style>

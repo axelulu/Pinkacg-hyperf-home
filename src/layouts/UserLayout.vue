@@ -51,6 +51,7 @@
                 <div>
                   <div><p>欢迎登录粉萌次元！</p></div>
                   <a-form-model
+                    ref='login'
                     :model="login"
                     :rules="loginRules"
                     class="content">
@@ -105,6 +106,7 @@
                 <div>
                   <div><p>欢迎注册粉萌次元！</p></div>
                   <a-form-model
+                    ref='register'
                     :model="register"
                     :rules="registerRules"
                     class="content">
@@ -347,28 +349,9 @@ export default {
     changeForgetMod () {},
     ...mapActions(['Login']),
     Logins () {
-      this.Login(this.login)
-        .then(() => {
-          this.$message.success('登陆成功')
-        })
-        .catch(() => {
-          this.$message.error('登陆失败')
-        })
-        .finally(() => {
-          setTimeout(() => {
-            location.reload()
-          }, 1000)
-        })
-    },
-    Registers () {
-      register(this.register).then((res) => {
-        console.log(res)
-        if (res.code === 200) {
-          this.$message.success('注册成功')
-          this.Login({
-            'username': this.register.username,
-            'password': this.register.password
-          })
+      this.$refs.login.validate(v => {
+        if (v) {
+          this.Login(this.login)
             .then(() => {
               this.$message.success('登陆成功')
             })
@@ -381,8 +364,35 @@ export default {
               }, 1000)
             })
         } else {
-          this.$message.error('注册失败')
+          this.$message.info('输入格式不正确')
         }
+      })
+    },
+    Registers () {
+      this.$refs.register.validate(v => {
+          if (v) {
+            register(this.register).then((res) => {
+              if (res.code === 200) {
+                this.$message.success('注册成功')
+                this.Login({
+                  'username': this.register.username,
+                  'password': this.register.password
+                }).then(() => {
+                    this.$message.success('登陆成功')
+                }).catch(() => {
+                    this.$message.error('登陆失败')
+                }).finally(() => {
+                    setTimeout(() => {
+                      // location.reload()
+                    }, 1000)
+                })
+              } else {
+                this.$message.error('注册失败')
+              }
+            })
+          } else {
+            this.$message.info('格式错误')
+          }
       })
     },
     Forgets () {},

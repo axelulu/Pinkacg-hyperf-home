@@ -30,10 +30,11 @@
       <div class='search_box'>
         <section class='cat-2 cat-col cat-col-full'>
           <div class='cat-container clearfix'>
-            <div id='pinkacg_box_1' class='cms-cat cms-cat-s7'>
+            <div class='pinkacg_box_1 cms-cat cms-cat-s7'>
               <div class='page-1'>
+                <a-empty style="padding: 180px;" v-if='posts.length === 0' />
                 <div v-for='(v, k) in posts' :key='k' class='col-md-2 box-2 float-left'>
-                  <article id='post-78060' class='post type-post status-publish format-standard'>
+                  <article class='post type-post status-publish format-standard'>
                     <div class='entry-thumb hover-scale'>
                       <router-link :to='"/" + v.id + ".html"'><img
                         width='500'
@@ -75,7 +76,7 @@
                   </article>
                 </div>
                 <div class='pinkacg_other_more_post'>
-                  <a data-paged='1' data-search='漫' class='more-post ajax-morepost'>更多文章 <i
+                  <a class='more-post ajax-morepost'>更多文章 <i
                     class='tico tico-angle-right'></i></a>
                 </div>
               </div>
@@ -115,13 +116,16 @@ export default {
     getPostList({
       'title': this.$route.params.word
     }).then((res) => {
+      if (res.code !== 200) {
+        this.$message.error(res.message)
+        return []
+      }
       this.posts = res.result.data
       this.word = this.$route.params.word
     })
   },
   methods: {
     Search () {
-      console.log(this.word)
       this.$router.push({ path: '/search/' + this.word })
     }
   }

@@ -19,9 +19,10 @@
         <a @click="orderBy='views'" :class="orderBy=='views' ? 'active ' : ''" class="home_title_menu_item">浏览</a>
       </div>
       <a-spin :spinning="loading">
-        <div id="pinkacg_box_1" style="height: 480px" class="cms-cat cms-cat-s7">
+        <div style="height: 480px" class="pinkacg_box_1 cms-cat cms-cat-s7">
+          <a-empty style="padding: 180px;" v-if='categoryPost.length === 0' />
           <div v-for="(v, k) in categoryPost" :key="k" class="col-md-2 box-1 float-left">
-            <article id="post-78060" class="post type-post status-publish format-standard">
+            <article class="post type-post status-publish format-standard">
               <div class="entry-thumb hover-scale">
                 <router-link :to="'/' + v.id + '.html'">
                   <img
@@ -103,6 +104,10 @@ export default {
         'menu': this.v.menu,
         'orderBy': this.orderBy
       }).then((res) => {
+        if (res.code !== 200) {
+          this.$message.error(res.message)
+          return []
+        }
         this.categoryPost = res.result.data
         this.loading = false
       })
@@ -115,6 +120,10 @@ export default {
         'menu': this.v.menu,
         'orderBy': this.orderBy
       }).then((res) => {
+        if (res.code !== 200) {
+          this.$message.error(res.message)
+          return []
+        }
         this.categoryPost = res.result.data
         this.loading = false
       })

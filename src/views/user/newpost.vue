@@ -74,7 +74,7 @@
                     </a-form-model-item>
                     <a-form-model-item
                       :prop="`music[${v}].link`"
-                      :rules="[ { required: true, message: '请输入音乐链接!' }, { min: 10, message: '音乐链接不得小于10字符' }, { max: 100, message: '音乐链接不得超过100字符' }]"
+                      :rules="[ {required: true, message: '请输入链接地址', trigger: 'blur'}, { validator: isTrueUrl, trigger: 'blur' } ]"
                       class="col-lg-5 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
@@ -121,7 +121,7 @@
                     </a-form-model-item>
                     <a-form-model-item
                       :prop="`video[${v}].link`"
-                      :rules="[ { required: true, message: '请输入视频链接!' }, { min: 10, message: '视频链接不得小于10字符' }, { max: 100, message: '视频链接不得超过100字符' }]"
+                      :rules="[ {required: true, message: '请输入链接地址', trigger: 'blur'}, { validator: isTrueUrl, trigger: 'blur' } ]"
                       class="col-lg-5 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
@@ -134,10 +134,10 @@
                     </a-form-model-item>
                     <a-form-model-item
                       :prop="`video[${v}].credit`"
-                      :rules="[ { required: true, message: '请输入积分!' }]"
+                      :rules="[{ validator: checkCredit }]"
                       class="col-lg-2 float-left poi-g_lg-2-10"
                     >
-                      <a-input-number v-model="k.credit" placeholder="视频积分" style="margin-right: 3%"/>
+                      <a-input-number class='publish_newpost_credit pinkacg_setting_content_preface_control' v-model="k.credit" placeholder="视频积分" style="margin-right: 3%"/>
                     </a-form-model-item>
                     <div class="col-lg-1 float-left poi-g_lg-1-10">
                       <div class="poi-btn-group pinkacg_download_link_storage_btns">
@@ -212,6 +212,7 @@
                       <span class="poi-icon fa-hand-paper fas fa-fw" aria-hidden="true"></span>
                       <a-upload
                         :customRequest="getUploadPostImg"
+                        :before-upload="beforeUpload"
                         class="upload-list-inline"
                       >
                         添加图片
@@ -226,15 +227,15 @@
                       </div>
                       <a-form-model-item
                         prop="header_img"
+                        v-model="model.header_img"
                         :rules="[ { required: true, message: '请输入网站封面!' }]"
                       >
                         <div class="pictype">
                           <span @click="insertImg(v)" class="pinkacg_btn pinkacg_btn_success">插入文章</span>
-                          <a-button
-                            v-model="model.header_img"
+                          <span
                             @click="setHeaderImg(v, k)"
                             :class="set_header_img === k ? 'pinkacg_btn_success' : ''"
-                            class="pinkacg_btn">设为封面</a-button>
+                            class="pinkacg_btn">设为封面</span>
                         </div>
                       </a-form-model-item>
                     </div>
@@ -313,7 +314,7 @@
                     </a-form-model-item>
                     <a-form-model-item
                       :prop="`download[${v}].link`"
-                      :rules="[ { required: true, message: '请输入下载链接!' }, { min: 10, message: '下载链接不得小于10字符' }, { max: 100, message: '下载链接不得超过100字符' }]"
+                      :rules="[ {required: true, message: '请输入链接地址', trigger: 'blur'}, { validator: isTrueUrl, trigger: 'blur' } ]"
                       class="col-lg-3 float-left poi-g_lg-2-10">
                       <label class="pinkacg_download_link_group_inputs">
                         <span class="pinkacg_download_link_inputs_icon">
@@ -402,7 +403,7 @@
                 </div>
               </fieldset>
             </a-form-model-item>
-            <a @click="handleOk" style="padding: 8px;" data-type="newpost" class="submit_post pinkacg_setting_content_btn_success">
+            <a @click="handleOk" style="padding: 8px;" class="submit_post pinkacg_setting_content_btn_success">
               <span class="poi-icon fa-plus fas fa-fw" aria-hidden="true">提交</span>
             </a>
           </a-form-model>
@@ -420,7 +421,7 @@ import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 import userAside from '@/views/user/components/aside'
 import { getCategoryList } from '@/api/category'
-import { uploadFile } from '@/api/upload'
+import { uploadImgFile } from '@/api/upload'
 import { getImg } from '@/utils/util'
 import { createPostList } from '@/api/post'
 
@@ -581,19 +582,11 @@ export default {
         modules: {
           toolbar: {
             container: toolbarOptions
-            // handlers: {
-            //   'image': function (value) {
-            //     if (value) {
-            //       document.querySelector('.upload').click()
-            //     } else {
-            //       this.quill.format('image', false)
-            //     }
-            //   }
-            // }
           }
         }
       },
       postCategory: {},
+      user_id: localStorage.getItem('user_id'),
       model: {
         'author': null,
         'type': 'post',
@@ -626,12 +619,20 @@ export default {
     this.PostCategory()
   },
   methods: {
+    isTrueUrl (rule, value, callback) {
+      const reg = /(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
+      if (!reg.test(value)) {
+        callback(new Error('请输入正确的链接'))
+      } else {
+        callback()
+      }
+    },
     checkCredit (rule, value, callback) {
       if (value > 0 && value < 21) {
         callback()
         return
       }
-      callback('积分必须在1到20之间!')
+      callback(new Error('积分必须在1到20之间!'))
     },
     exchangePostType (v) {
       this.model.type = v
@@ -744,7 +745,7 @@ export default {
       formData.append('file', info.file)
       // 开始上传
       this.upload_loading = true
-      uploadFile(formData).then((res) => {
+      uploadImgFile(formData).then((res) => {
         if (res.code !== 200) {
           that.$message.error(res.message)
           that.upload_loading = false
@@ -769,12 +770,30 @@ export default {
         that.upload_loading = false
       })
     },
+    beforeUpload (file) {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+      if (!isJpgOrPng) {
+        this.$message.error('你只能上传jpep与png文件!')
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('图片大于2MB!')
+      }
+      return isJpgOrPng && isLt2M
+    },
     handleOk () {
       this.$refs.publishPost.validate(valid => {
         if (valid) {
-          this.model.author = this.$store.getters.userInfo.id
+          this.model.author = this.user_id
           createPostList(this.model).then(res => {
-            res.code === 200 ? this.$message.success(res.message) : this.$message.error(res.message)
+            if (res.code !== 200) {
+              this.$message.error(res.message)
+              return []
+            }
+            this.$message.success(res.message)
+            setTimeout(() => {
+              this.$router.replace('/user/draft')
+            }, 1000)
           })
         } else {
           return false
@@ -792,10 +811,6 @@ export default {
 .ant-form legend {
   border-bottom: 0px solid #d9d9d9;
 }
-.ant-input:placeholder-shown {
-  text-overflow: ellipsis;
-  font-size: 12px;
-}
 .ant-cascader-input.ant-input {
   border-radius: 1rem 1rem 1rem 1rem;
   border: 2px solid #00000012;
@@ -808,8 +823,5 @@ export default {
 }
 .ant-form-item {
   margin-bottom: 0px;
-}
-.ant-input:placeholder-shown {
-  border-radius: 1rem;
 }
 </style>

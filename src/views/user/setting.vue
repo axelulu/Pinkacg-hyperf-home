@@ -19,24 +19,24 @@
                   <div class="pinkacg_setting_content_my_avatar_img">
                     <img
                       style="width: 100px;height: 100px;"
-                      v-if='userInfo.avatar'
+                      v-if="userInfo.avatar"
                       :src="getImg(userInfo.avatar)"
                       alt="avatar"
                       class="pinkacg_setting_content_avatar_img"
                       width="100"
                       height="100">
                   </div>
-                    <label class="pinkacg_setting_content_my_avatar_upload-btn">
-                      <a-upload
-                        name="file"
-                        :show-upload-list="false"
-                        :customRequest="value => getUploadAvatar(value, 'background')"
-                        :before-upload="beforeUpload"
-                      >
-                        <span class="poi-icon fa-camera fas fa-fw"></span>
-                        <span class="pinkacg_setting_content_text">更改我的头像</span>
-                      </a-upload>
-                    </label>
+                  <label class="pinkacg_setting_content_my_avatar_upload-btn">
+                    <a-upload
+                      name="file"
+                      :show-upload-list="false"
+                      :customRequest="value => getUploadAvatar(value, 'background')"
+                      :before-upload="beforeUpload"
+                    >
+                      <span class="poi-icon fa-camera fas fa-fw"></span>
+                      <span class="pinkacg_setting_content_text">更改我的头像</span>
+                    </a-upload>
+                  </label>
                 </div>
               </div>
             </fieldset>
@@ -52,11 +52,10 @@
                 </div>
                 <a-form-model
                   :model="userInfo"
-                  ref='userInfo'
-                  :rules='userInfoRules'
-                  id="my_setting_information">
+                  ref="userInfo"
+                  :rules="userInfoRules">
                   <a-form-model-item
-                    prop='name'
+                    prop="name"
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix ">
                       <div class="col-lg-2 float-left">
@@ -74,7 +73,7 @@
                     </div>
                   </a-form-model-item>
                   <a-form-model-item
-                    prop='desc'
+                    prop="desc"
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix ">
                       <div class="col-lg-2 float-left">
@@ -96,7 +95,7 @@
                     <div class="clearfix ">
                       <div class="col-lg-10 float-right">
                         <div class="pinkacg_setting_content_preface_item_content">
-                          <a-button @click='updateUserInfo' class="my_text_msg pinkacg_setting_content_btn_success">
+                          <a-button @click="updateUserInfo" class="pinkacg_setting_content_btn_success">
                             <span class="poi-icon fa-check fas fa-fw"></span>
                             <span class="pinkacg_setting_content_text">更新个人资料</span>
                           </a-button>
@@ -119,10 +118,10 @@
                 </div>
                 <a-form-model
                   :model="userEmail"
-                  ref='userEmail'
-                  :rules='userEmailRules'>
+                  ref="userEmail"
+                  :rules="userEmailRules">
                   <a-form-model-item
-                    prop='email'
+                    prop="email"
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -140,7 +139,7 @@
                     </div>
                   </a-form-model-item>
                   <a-form-model-item
-                    prop='myConfirm'
+                    prop="myConfirm"
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -149,18 +148,18 @@
                       <div class="col-lg-10 float-right">
                         <div class="pinkacg_setting_content_preface_item_content">
                           <div class="clearfix">
-                            <div style="padding-left:0px" class="col-lg-5 float-left">
+                            <div style="padding-left:0px" class="col-lg-7 float-left">
                               <a-input
                                 class="pinkacg_setting_content_preface_control"
                                 placeholder="验证码"
                                 title="验证码"
-                                v-model='userEmail.myConfirm'/>
+                                v-model="userEmail.myConfirm"/>
                             </div>
-                            <div class="col-lg-7 float-right">
-                              <a @click='sendMails' class="sent_email pinkacg_setting_content_text_email">
+                            <div style="line-height: 0px;margin: 0px;" class="col-lg-5 float-right">
+                              <a-button style="margin: 0" @click="sendMails" class="sent_email pinkacg_setting_content_btn_success">
                                 <span class="poi-icon fa-envelope fas fa-fw"></span>
                                 <span class="">发送验证码</span>
-                              </a>
+                              </a-button>
                             </div>
                           </div>
                         </div>
@@ -175,8 +174,8 @@
                       <div class="col-lg-10 float-right">
                         <div class="pinkacg_setting_content_preface_item_content">
                           <a-button
-                            @click='updateUserEmails'
-                            class="my_email_msg pinkacg_setting_content_btn_success">
+                            @click="updateUserEmails"
+                            class="pinkacg_setting_content_btn_success">
                             <span class="poi-icon fa-check fas fa-fw"></span>
                             <span class="pinkacg_setting_content_text">更新邮箱</span>
                           </a-button>
@@ -199,10 +198,10 @@
                 </div>
                 <a-form-model
                   :model="userNewPassword"
-                  ref='userNewPassword'
-                  :rules='userNewPasswordRules'>
+                  ref="userNewPassword"
+                  :rules="userNewPasswordRules">
                   <a-form-model-item
-                    prop='oldPassword'
+                    prop="password"
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -214,13 +213,13 @@
                             class="pinkacg_setting_content_preface_control"
                             placeholder="旧密码"
                             title="旧密码"
-                            v-model='userNewPassword.password'/>
+                            v-model="userNewPassword.password"/>
                         </div>
                       </div>
                     </div>
                   </a-form-model-item>
                   <a-form-model-item
-                    prop='newPassword'
+                    prop="newPassword"
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -232,13 +231,13 @@
                             class="pinkacg_setting_content_preface_control"
                             placeholder="新密码"
                             title="新密码"
-                            v-model='userNewPassword.newPassword'/>
+                            v-model="userNewPassword.newPassword"/>
                         </div>
                       </div>
                     </div>
                   </a-form-model-item>
                   <a-form-model-item
-                    prop='confirmPassword'
+                    prop="confirmPassword"
                     class="pinkacg_setting_content_preface_item">
                     <div class="clearfix">
                       <div class="col-lg-2 float-left">
@@ -250,7 +249,7 @@
                             class="pinkacg_setting_content_preface_control"
                             placeholder="确认新密码"
                             title="确认新密码"
-                            v-model='userNewPassword.confirmPassword'/>
+                            v-model="userNewPassword.confirmPassword"/>
                         </div>
                       </div>
                     </div>
@@ -263,8 +262,8 @@
                       <div class="col-lg-10 float-right">
                         <div class="pinkacg_setting_content_preface_item_content">
                           <a-button
-                            @click='updateUserPassword'
-                            class="my_pwd_msg pinkacg_setting_content_btn_success">
+                            @click="updateUserPassword"
+                            class="pinkacg_setting_content_btn_success">
                             <span class="poi-icon fa-check fas fa-fw"></span>
                             <span class="pinkacg_setting_content_text">更新密码</span>
                           </a-button>
@@ -335,7 +334,7 @@
 import userAside from '@/views/user/components/aside'
 import { getUserList, sendChangeMail, updateUserEmail, updateUserInfo, updateUserPassword } from '@/api/user'
 import { getImg } from '@/utils/util'
-import { uploadFile, uploadAvatarImg } from '@/api/upload'
+import { uploadImgFile, uploadAvatarImg } from '@/api/upload'
 
 export default {
   name: 'Index',
@@ -357,6 +356,7 @@ export default {
         email: [
           {
             type: 'email',
+            required: true,
             message: '邮箱格式不正确'
           },
           {
@@ -380,31 +380,22 @@ export default {
         ]
       },
       'userNewPasswordRules': {
-        oldPassword: [
+        password: [
           {
             required: true,
             message: '请输入你的密码!'
-          },
-          {
-            validator: this.validateToNextPassword
           }
         ],
         confirmPassword: [
           {
             required: true,
             message: '请确定你的密码!'
-          },
-          {
-            validator: this.compareToFirstPassword
           }
         ],
         newPassword: [
           {
             required: true,
             message: '请输入你的新密码!'
-          },
-          {
-            validator: this.validateToNextPassword
           }
         ]
       },
@@ -419,40 +410,26 @@ export default {
       },
       'userInfo': {},
       confirmDirty: false,
-      getImg
+      getImg,
+      user_id: localStorage.getItem('user_id')
     }
   },
   created () {
     this.getUserInfo()
   },
   methods: {
-    validateToNextPassword (rule, value, callback) {
-      const form = this.form
-      if (value && this.confirmDirty) {
-        form.validateFields(['confirm'], { force: true })
-      }
-      callback()
-    },
-    compareToFirstPassword (rule, value, callback) {
-      const form = this.form
-      if (value && value !== form.getFieldValue('password')) {
-        callback('二次密码不一样!')
-      } else {
-        callback()
-      }
-    },
     getUploadAvatar (info, value) {
       const that = this
       const formData = new FormData()
       formData.append('file', info.file)
-      uploadFile(formData).then((res) => {
+      uploadImgFile(formData).then((res) => {
         if (res.code !== 200) {
           that.$message.error(res.message)
           return []
         }
         uploadAvatarImg({
           'avatar': res.result.data,
-          'id': this.$store.getters.userInfo.id
+          'id': this.user_id
         }).then((res) => {
           if (res.code !== 200) {
             that.$message.error(res.message)
@@ -467,16 +444,16 @@ export default {
       if (!isJpgOrPng) {
         this.$message.error('你只能上传jpep与png文件!')
       }
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isLt2M) {
-        this.$message.error('图片大于2MB!')
+      const isLt1M = file.size / 1024 / 1024 < 1
+      if (!isLt1M) {
+        this.$message.error('图片大于1MB!')
       }
-      return isJpgOrPng && isLt2M
+      return isJpgOrPng && isLt1M
     },
     updateUserEmails () {
       const that = this
-      this.$refs.userEmail.validate(valide => {
-        if (valide) {
+      this.$refs.userEmail.validate(valid => {
+        if (valid) {
           updateUserEmail({
             'id': this.userInfo.id,
             'email': this.userEmail.email,
@@ -488,6 +465,8 @@ export default {
             }
             that.$message.success(res.message)
           })
+        } else {
+          that.$message.info('格式错误')
         }
       })
     },
@@ -506,8 +485,10 @@ export default {
     },
     updateUserPassword () {
       const that = this
-      this.$refs.userNewPassword.validate(valide => {
-        if (valide) {
+      console.log(1212)
+      this.$refs.userNewPassword.validate(valid => {
+        console.log(valid)
+        if (valid) {
           updateUserPassword(this.userNewPassword, this.userInfo.id).then((res) => {
             if (res.code !== 200) {
               that.$message.error(res.message)
@@ -515,13 +496,15 @@ export default {
             }
             that.$message.success(res.message)
           })
+        } else {
+          that.$message.info('格式错误')
         }
       })
     },
     updateUserInfo () {
       const that = this
-      this.$refs.userInfo.validate(valide => {
-        if (valide) {
+      this.$refs.userInfo.validate(valid => {
+        if (valid) {
           updateUserInfo(this.userInfo).then((res) => {
             if (res.code !== 200) {
               that.$message.error(res.message)
@@ -529,13 +512,15 @@ export default {
             }
             that.$message.success(res.message)
           })
+        } else {
+          that.$message.info('格式错误')
         }
       })
     },
     getUserInfo () {
       const that = this
       getUserList({
-        'id': this.$store.getters.userInfo.id
+        'id': this.user_id
       }).then((res) => {
         if (res.code !== 200) {
           that.$message.error(res.message)

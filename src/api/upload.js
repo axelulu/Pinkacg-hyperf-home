@@ -1,17 +1,17 @@
 import request from '@/utils/request'
 
 const api = {
-  uploadAvatarImg: '/updateUserAvatar/create',
+  uploadAvatarImg: '/user/updateUserAvatar',
   uploadPostFile: '/uploadPostFile/create',
-  uploadFile: '/uploadFile/create'
+  uploadImgFile: '/uploadImgFile/create'
 }
 
 export default api
 
-export function uploadFile (parameter) {
+export function uploadImgFile (parameter) {
   console.log(parameter)
   return request({
-    url: api.uploadFile,
+    url: api.uploadImgFile,
     method: 'post',
     data: parameter
   })

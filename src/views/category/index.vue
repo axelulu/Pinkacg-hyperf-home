@@ -20,7 +20,7 @@
       </div>
       <!-- 排序 -->
       <div style="margin: 0px auto;margin-top: 0px;padding: 0px 5px 5px 5px;" class="header white crumb-container">
-        <nav data-id="ost" class="paixu poi-crumb">
+        <nav class="paixu poi-crumb">
           <a @click="orderBy='id'" :class="orderBy=='id' ? 'is-active ' : ''" class="pinkacg-paixu">按最新</a>
           <a @click="orderBy='comment_count'" :class="orderBy=='comment_count' ? 'is-active ' : ''" class="pinkacg-paixu">按评论</a>
           <a @click="orderBy='created_at'" :class="orderBy=='created_at' ? 'is-active ' : ''" class="pinkacg-paixu">按日期</a>
@@ -33,11 +33,12 @@
       <div class="cat_ajax_post">
         <section class="cat-2 cat-col cat-col-full">
           <div class="cat-container clearfix">
-            <div id="pinkacg_box_1" class="cms-cat cms-cat-s7">
-              <a-spin :spinning='loading'>
+            <div class="pinkacg_box_1 cms-cat cms-cat-s7">
+              <a-spin :spinning="loading">
                 <div class="single_posts">
+                  <a-empty style="padding: 180px;" v-if='posts.length === 0' />
                   <div v-for="(v, k) in posts" :key="k" class="col-md-2 box-2 float-left">
-                    <article id="post-78060" class="post type-post status-publish format-standard">
+                    <article class="post type-post status-publish format-standard">
                       <div class="entry-thumb hover-scale">
                         <router-link :to="'/' + v.id + '.html'">
                           <img
@@ -67,17 +68,17 @@
                             <router-link :to="'/' + v.id + '.html'" rel="bookmark">{{ v.title }}</router-link>
                           </h2>
                           <div class="entry-meta entry-meta-1">
-                          <span class="entry-date text-muted">
-                            <i class="fas fa-bell"></i>
-                            <time
-                              class="entry-date"
-                              :datetime="v.updated_at"
-                              :title="v.updated_at">{{ diaplayTime(v.updated_at) }}</time>
-                          </span>
+                            <span class="entry-date text-muted">
+                              <i class="fas fa-bell"></i>
+                              <time
+                                class="entry-date"
+                                :datetime="v.updated_at"
+                                :title="v.updated_at">{{ diaplayTime(v.updated_at) }}</time>
+                            </span>
                             <span class="comments-link text-muted pull-right">
-                            <i class="far fa-comment"></i>
-                            <router-link :to="'/' + v.id + '.html'">{{ v.comment_count }}</router-link>
-                          </span>
+                              <i class="far fa-comment"></i>
+                              <router-link :to="'/' + v.id + '.html'">{{ v.comment_count }}</router-link>
+                            </span>
                             <span class="views-count text-muted pull-right"><i class="fas fa-eye"></i>{{ v.view }}</span>
                           </div>
                         </header>
@@ -87,7 +88,7 @@
                 </div>
               </a-spin>
               <div class="pinkacg_other_more_post">
-                <a data-paged="0" data-cat="ost" class="more-post ajax-morepost">更多文章 <i
+                <a class="more-post ajax-morepost">更多文章 <i
                   class="tico tico-angle-right"></i></a>
               </div>
             </div>
@@ -138,12 +139,20 @@ export default {
     getCategoryList({
       'value': this.category
     }).then((res) => {
+      if (res.code !== 200) {
+        this.$message.error(res.message)
+        return []
+      }
       this.categoryMeta = (res.result.data)[0]
     })
     getPostList({
       'menu': this.category,
       'orderBy': this.orderBy
     }).then((res) => {
+      if (res.code !== 200) {
+        this.$message.error(res.message)
+        return []
+      }
       this.posts = res.result.data
       this.loading = false
     })

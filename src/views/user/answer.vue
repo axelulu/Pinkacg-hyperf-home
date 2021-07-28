@@ -21,7 +21,7 @@
                     <a-skeleton v-if='loading' active />
                     <div class="user_test">
                       <!--demo1 答题卡-->
-                      <div id="test_form" class="card_wrap">
+                      <div class="card_wrap">
                         <div v-for='(v, k) in questionList' :key='k' class="user_test_card_cont">
                           <div class="user_test_card">
                             <p class="test_content_nr_main question">
@@ -126,21 +126,27 @@ export default {
     getUserList({
       'id': this.user_id
     }).then((res) => {
+      if (res.code !== 200) {
+        this.$message.info(res.message)
+        return
+      }
       this.grade = res.result['data'][0]['answertest']
     })
     this.loading = true
     getQuestionList({
       'answer': 1
     }).then((res) => {
+      if (res.code !== 200) {
+        this.$message.error(res.message)
+        return []
+      }
       this.questionList = res.result.data
       this.loading = false
     })
   },
   methods: {
     selectAnswer (v, result) {
-      console.log(v.result)
       v.result = result
-      console.log(v.result)
     },
     submitQuestionResult () {
       console.log(this.questionList)
