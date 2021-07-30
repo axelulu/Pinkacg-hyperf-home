@@ -88,8 +88,12 @@
                 </div>
               </a-spin>
               <div class="pinkacg_other_more_post">
-                <a class="more-post ajax-morepost">更多文章 <i
-                  class="tico tico-angle-right"></i></a>
+                <a @click='loadMorePost(pageNo - 1)' class="more-post ajax-morepost">上一页<i
+                  class="tico tico-angle-right"></i>
+                </a>
+                <a @click='loadMorePost(pageNo + 1)' class="more-post ajax-morepost">下一页<i
+                  class="tico tico-angle-right"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -114,7 +118,8 @@ export default {
       posts: [],
       loading: false,
       getImg,
-      diaplayTime
+      diaplayTime,
+      pageNo: 1
     }
   },
   metaInfo () {
@@ -127,7 +132,8 @@ export default {
       this.loading = true
       getPostList({
         'menu': this.category,
-        'orderBy': this.orderBy
+        'orderBy': this.orderBy,
+        'pageNo': this.pageNo
       }).then((res) => {
         this.posts = res.result.data
         this.loading = false
@@ -135,27 +141,58 @@ export default {
     }
   },
   created () {
-    this.loading = true
-    getCategoryList({
-      'value': this.category
-    }).then((res) => {
-      if (res.code !== 200) {
-        this.$message.error(res.message)
-        return []
-      }
-      this.categoryMeta = (res.result.data)[0]
-    })
-    getPostList({
-      'menu': this.category,
-      'orderBy': this.orderBy
-    }).then((res) => {
-      if (res.code !== 200) {
-        this.$message.error(res.message)
-        return []
-      }
-      this.posts = res.result.data
-      this.loading = false
-    })
+    this.getPostLists()
+    this.getCatLists()
+  },
+  methods: {
+    getPostLists () {
+      this.loading = true
+      getPostList({
+        'menu': this.category,
+        'orderBy': this.orderBy,
+        'pageNo': this.pageNo
+      }).then((res) => {
+        if (res.code !== 200) {
+          this.$message.error(res.message)
+          return []
+        }
+        this.posts = res.result.data
+        this.loading = false
+      })
+    },
+    getCatLists () {
+      getCategoryList({
+        'value': this.category
+      }).then((res) => {
+        if (res.code !== 200) {
+          this.$message.error(res.message)
+          return []
+        }
+        this.categoryMeta = (res.result.data)[0]
+        this.pageNo = res.result.pageNo
+      })
+    },
+    loadMorePost (pageNo) {
+      this.loading = true
+      getPostList({
+        'menu': this.category,
+        'orderBy': this.orderBy,
+        'pageNo': pageNo
+      }).then((res) => {
+        if (res.code !== 200) {
+          this.$message.error(res.message)
+          return []
+        }
+        if (res.result.data.length === 0) {
+          this.$message.info('暂无更多数据')
+          this.loading = false
+          return []
+        }
+        this.posts = res.result.data
+        this.pageNo = res.result.pageNo
+        this.loading = false
+      })
+    }
   }
 }
 </script>

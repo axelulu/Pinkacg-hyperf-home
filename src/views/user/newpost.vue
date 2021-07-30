@@ -782,7 +782,9 @@ export default {
       return isJpgOrPng && isLt2M
     },
     handleOk () {
+      console.log(1212)
       this.$refs.publishPost.validate(valid => {
+        console.log(valid)
         if (valid) {
           this.model.author = this.user_id
           createPostList(this.model).then(res => {
