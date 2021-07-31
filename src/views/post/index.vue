@@ -44,7 +44,22 @@
             <fieldset v-for='(v, k) in postMeta.download' :key='k' class="pinkacg_download_content_content">
               <div v-if='(v.link && v.credit && v.name) || v.link === ""'>
                 <legend class="pinkacg_download_content_name">
-                  <span class="pinkacg_download_label_success">磁力链接</span></legend>
+                  <span class="pinkacg_download_label_success">磁力链接</span>
+                </legend>
+                <div class="pinkacg_download_content_item_download_pwd">
+                  <div class="pinkacg_download_">
+                    <div class="col-lg-2 float-left">
+                      <div class="pinkacg_download_content_item_label">
+                        <span class="poi-icon fa-unlock-alt fas fa-fw" aria-hidden="true"></span>
+                        <span class="pinkacg_icon_text">下载名称</span></div>
+                    </div>
+                    <div style="padding-right:0px" class="col-lg-10 float-left">
+                      <div class="poi-btn-group">
+                        <a class="pinkacg_root_key" style="padding: 6px;margin-bottom: 10px;">{{ v.name }}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="pinkacg_download_content_item_download_pwd">
                   <div class="pinkacg_download_">
                     <div class="col-lg-2 float-left">
@@ -54,7 +69,7 @@
                     </div>
                     <div style="padding-right:0px" class="col-lg-10 float-left">
                       <div class="poi-btn-group">
-                        <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.name">
+                        <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.pwd">
                         <a class="pinkacg_btn pinkacg_btn_success pinkacg_btn_copy">
                           <span class="poi-icon fa-copy fas fa-fw" aria-hidden="true"></span>
                         </a>
@@ -71,7 +86,7 @@
                     </div>
                     <div style="padding-right:0px" class="col-lg-10 float-left">
                       <div class="poi-btn-group">
-                        <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.pwd">
+                        <input class="pinkacg_input pinkacg_download_content_item_input" type="text" readonly="" :value="v.pwd2">
                         <a class="pinkacg_btn pinkacg_btn_success pinkacg_btn_copy">
                           <span class="poi-icon fa-copy fas fa-fw" aria-hidden="true"></span>
                         </a>

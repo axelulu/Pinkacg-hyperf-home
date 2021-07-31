@@ -88,7 +88,14 @@ export default {
     this.getSetting()
     this.getSiteMetaSetting()
     this.loading = true
-    getPostList().then((res) => {
+    getPostList({
+      'pageSize': 20,
+      'orderBy': 'updated_at'
+    }).then((res) => {
+      if (res.code !== 200) {
+        this.$message.error(res.message)
+        return []
+      }
       this.popularPost = res.result.data
       this.loading = false
     })
