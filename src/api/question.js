@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
 const api = {
-  questionList: '/question/index',
-  submitQuestionResult: '/submitQuestionResult/index'
+  questionList: '/question/question_query',
+  submitQuestionResult: '/question/question_submit'
 }
 
 export default api

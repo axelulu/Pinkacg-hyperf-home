@@ -26,8 +26,7 @@
       </a-spin>
     </section>    <!-- 公告 -->
     <div class="container">
-      <div class="pinkacg_site_notice">
-      </div>
+      <div class="pinkacg_site_notice" v-html='meta.head_notice'></div>
     </div>
     <div class="home">
       <!--广告-->
@@ -81,6 +80,7 @@ export default {
       'cms': {},
       'meta': {},
       'popularPost': {},
+      'head_notice': '',
       getImg
     }
   },

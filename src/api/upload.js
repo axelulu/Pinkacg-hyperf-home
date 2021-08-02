@@ -1,9 +1,8 @@
 import request from '@/utils/request'
 
 const api = {
-  uploadAvatarImg: '/user/updateUserAvatar',
-  uploadPostFile: '/uploadPostFile/create',
-  uploadImgFile: '/uploadImgFile/create'
+  uploadAvatarImg: '/user/user_update_avatar',
+  uploadImgFile: '/upload/upload_img'
 }
 
 export default api
@@ -12,15 +11,6 @@ export function uploadImgFile (parameter) {
   console.log(parameter)
   return request({
     url: api.uploadImgFile,
-    method: 'post',
-    data: parameter
-  })
-}
-
-export function uploadPostFile (parameter) {
-  console.log(parameter)
-  return request({
-    url: api.uploadPostFile,
     method: 'post',
     data: parameter
   })

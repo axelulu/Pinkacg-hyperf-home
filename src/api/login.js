@@ -2,9 +2,8 @@ import request from '@/utils/request'
 
 const userApi = {
   Login: '/auth/login',
-  Register: '/auth/register',
-  Logout: '/auth/logout',
-  GetData: '/auth/getData'
+  Register: 'auth/register',
+  Logout: '/auth/logout'
 }
 
 /**
@@ -26,14 +25,6 @@ export function login (parameter) {
   })
 }
 
-export function register (parameter) {
-  return request({
-    url: userApi.Register,
-    method: 'post',
-    data: parameter
-  })
-}
-
 export function logout () {
   return request({
     url: userApi.Logout,
@@ -44,9 +35,10 @@ export function logout () {
   })
 }
 
-export function getInfo () {
+export function register (parameter) {
   return request({
-    url: userApi.GetData,
-    method: 'post'
+    url: userApi.Register,
+    method: 'post',
+    data: parameter
   })
 }

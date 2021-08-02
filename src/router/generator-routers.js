@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import * as loginService from '@/api/login'
+import * as loginService from '@/api/user'
 // eslint-disable-next-line
 import { BasicLayout, BlankLayout, PageView, RouteView } from '@/layouts'
 

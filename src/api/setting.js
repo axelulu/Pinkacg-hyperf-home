@@ -2,22 +2,15 @@ import request from '@/utils/request'
 
 export function getSettingList (parameter) {
   return request({
-    url: '/' + parameter.name + '/index',
-    method: 'get'
+    url: '/setting/' + parameter.name + '/setting_query',
+    method: 'get',
+    params: parameter
   })
 }
 
-export function updateSettingList (parameter) {
+export function getSettingKey (parameter) {
   return request({
-    url: '/' + parameter.name + '/update',
-    method: 'put',
-    data: parameter
-  })
-}
-
-export function getCatSlug (parameter) {
-  return request({
-    url: '/tool/getCatSlug',
+    url: '/setting/' + parameter.name + '/setting_query_key',
     method: 'get',
     params: parameter
   })

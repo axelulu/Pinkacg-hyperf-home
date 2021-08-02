@@ -347,20 +347,23 @@ export default {
       this.registerMod = true
     },
     changeForgetMod () {},
-    ...mapActions(['Login']),
+    ...mapActions(['Login', 'GetInfo']),
     Logins () {
       this.$refs.login.validate(v => {
         if (v) {
           this.Login(this.login)
             .then(() => {
-              this.$message.success('登陆成功')
+              this.GetInfo().then(res => {
+                console.log(res)
+                this.$message.success('登陆成功')
+              })
             })
             .catch(() => {
               this.$message.error('登陆失败')
             })
             .finally(() => {
               setTimeout(() => {
-                location.reload()
+                // location.reload()
               }, 1000)
             })
         } else {
@@ -383,7 +386,7 @@ export default {
                     this.$message.error('登陆失败')
                 }).finally(() => {
                     setTimeout(() => {
-                      // location.reload()
+                      location.reload()
                     }, 1000)
                 })
               } else {

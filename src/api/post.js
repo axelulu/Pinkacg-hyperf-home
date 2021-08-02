@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
 const api = {
-  postList: '/post/index',
-  postCreate: '/post/create',
-  postUpdate: '/post/update',
-  purchase: '/purchase/create',
-  postDelete: '/post/delete'
+  postList: '/post/post_query',
+  purchase: '/post/post_purchase',
+  postCreate: '/post/post_create'
 }
 
 export default api
@@ -18,32 +16,17 @@ export function getPostList (parameter) {
   })
 }
 
-export function createPostList (parameter) {
+export function purchase (parameter) {
   return request({
-    url: api.postCreate,
+    url: api.purchase,
     method: 'post',
     data: parameter
   })
 }
 
-export function updatePostList (parameter) {
+export function createPostList (parameter) {
   return request({
-    url: api.postUpdate + '/' + parameter.id,
-    method: 'put',
-    data: parameter
-  })
-}
-
-export function deletePostList (parameter) {
-  return request({
-    url: api.postDelete + '/' + parameter.id,
-    method: 'delete'
-  })
-}
-
-export function purchase (parameter) {
-  return request({
-    url: api.purchase,
+    url: api.postCreate,
     method: 'post',
     data: parameter
   })
