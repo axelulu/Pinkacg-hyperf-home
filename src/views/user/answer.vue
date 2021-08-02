@@ -118,13 +118,12 @@ export default {
       questionList: [],
       pass: false,
       answer: false,
-      grade: 0,
-      user_id: localStorage.getItem('user_id')
+      grade: 0
     }
   },
   created () {
     getUserList({
-      'id': this.user_id
+      'id': this.$store.getters.userInfo.id
     }).then((res) => {
       if (res.code !== 200) {
         this.$message.info(res.message)
@@ -134,7 +133,8 @@ export default {
     })
     this.loading = true
     getQuestionList({
-      'answer': 1
+      'answer': 1,
+      'pageSize': 10000
     }).then((res) => {
       if (res.code !== 200) {
         this.$message.error(res.message)

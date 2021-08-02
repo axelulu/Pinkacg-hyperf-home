@@ -8,7 +8,6 @@ const api = {
 export default api
 
 export function uploadImgFile (parameter) {
-  console.log(parameter)
   return request({
     url: api.uploadImgFile,
     method: 'post',
@@ -18,7 +17,7 @@ export function uploadImgFile (parameter) {
 
 export function uploadAvatarImg (parameter) {
   return request({
-    url: api.uploadAvatarImg + '/' + parameter.id,
+    url: api.uploadAvatarImg,
     method: 'put',
     data: parameter
   })

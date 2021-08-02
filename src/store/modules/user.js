@@ -50,7 +50,6 @@ const user = {
         getInfo().then(response => {
           const result = response.result
           commit('SET_INFO', result)
-          localStorage.setItem('user_id', result.id)
           resolve(response)
         }).catch(error => {
           reject(error)

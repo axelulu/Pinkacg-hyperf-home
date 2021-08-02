@@ -363,7 +363,7 @@ export default {
             })
             .finally(() => {
               setTimeout(() => {
-                // location.reload()
+                location.reload()
               }, 1000)
             })
         } else {

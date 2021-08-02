@@ -19,33 +19,33 @@
                 <div class="pinkacg_notice_content_preface">
                   <div v-if="$store.getters.userInfo.name" class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">昵称</div>
-                    <div class="pinkacg_author_portal_item_content">{{ user_meta.name }}</div></div>
+                    <div class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.name }}</div></div>
                   <div v-if="$store.getters.userInfo.id" class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">UID</div>
-                    <div class="pinkacg_author_portal_item_content">{{ user_meta.id }}</div></div>
+                    <div class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.id }}</div></div>
                   <div v-if="$store.getters.userInfo.desc" class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">描述</div>
-                    <div class="pinkacg_author_portal_item_content">{{ user_meta.desc }}</div>
+                    <div class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.desc }}</div>
                   </div>
                   <div v-if="$store.getters.userInfo.role_meta" class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">身份状态：</div>
-                    <div class="pinkacg_author_portal_item_content">{{ user_meta.name }}</div>
+                    <div class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.role_meta.name }}</div>
                   </div>
                   <div class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">答题得分：</div>
                     <div v-if="$store.getters.userInfo.answertest === -1" class="pinkacg_author_portal_item_content">未答题</div>
-                    <div v-else class="pinkacg_author_portal_item_content">{{ user_meta.answertest }}</div>
+                    <div v-else class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.answertest }}</div>
                   </div>
                   <div v-if="$store.getters.userInfo.credit >= 0" class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">积分信息：</div>
-                    <div class="pinkacg_author_portal_item_content">{{ user_meta.credit }}</div>
+                    <div class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.credit }}</div>
                   </div>
                   <div class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">累计发帖</div>
-                    <div class="pinkacg_author_portal_item_content">{{ user_meta.post_num }}</div></div>
+                    <div class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.post_num }}</div></div>
                   <div class="pinkacg_author_portal_portal_item">
                     <div class="pinkacg_author_portal_item_title">累计评论</div>
-                    <div class="pinkacg_author_portal_item_content">{{ user_meta.comment_num }}</div>
+                    <div class="pinkacg_author_portal_item_content">{{ $store.getters.userInfo.comment_num }}</div>
                   </div>
                 </div>
               </div>
@@ -59,7 +59,6 @@
 
 <script>
 import userAside from '@/views/user/components/aside'
-import { getUserList } from '@/api/user'
 
 export default {
   name: 'Index',
@@ -69,24 +68,6 @@ export default {
   metaInfo () {
     return {
       title: '我的vip - 个人设置'
-    }
-  },
-  data () {
-    return {
-      user_id: localStorage.getItem('user_id'),
-      user_meta: {}
-    }
-  },
-  created () {
-    this.getUserInfo()
-  },
-  methods: {
-    getUserInfo () {
-      getUserList({
-        'id': this.user_id
-      }).then(res => {
-        this.user_meta = res.result.data[0]
-      })
     }
   }
 }

@@ -586,7 +586,6 @@ export default {
         }
       },
       postCategory: {},
-      user_id: localStorage.getItem('user_id'),
       model: {
         'author': null,
         'type': 'post',
@@ -786,7 +785,7 @@ export default {
       this.$refs.publishPost.validate(valid => {
         console.log(valid)
         if (valid) {
-          this.model.author = this.user_id
+          this.model.author = this.$store.getters.userInfo.id
           createPostList(this.model).then(res => {
             if (res.code !== 200) {
               this.$message.error(res.message)

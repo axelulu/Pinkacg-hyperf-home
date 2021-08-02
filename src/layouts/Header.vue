@@ -81,8 +81,8 @@
                 <a style="padding:0px;background: hsla(0, 0%, 100%, 0);" class="login-link bind-redirect">
                   <img src="https://img.catacg.cn/pinkacg_upload/img/2020/06/6027905533d2eec5809d812f5cd69d14f04263f0.png" alt="" class="pinkacg_guajian">
                   <img
-                    v-if="$store.getters.avatar"
-                    :src="getImg($store.getters.avatar)"
+                    v-if="$store.getters.userInfo.avatar"
+                    :src="getImg($store.getters.userInfo.avatar)"
                     alt="avatar"
                     class="pinkacg_setting_content_avatar_img"
                     width="100"

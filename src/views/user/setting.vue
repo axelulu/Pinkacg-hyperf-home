@@ -26,17 +26,19 @@
                       width="100"
                       height="100">
                   </div>
-                  <label class="pinkacg_setting_content_my_avatar_upload-btn">
-                    <a-upload
-                      name="file"
-                      :show-upload-list="false"
-                      :customRequest="value => getUploadAvatar(value, 'background')"
-                      :before-upload="beforeUpload"
-                    >
-                      <span class="poi-icon fa-camera fas fa-fw"></span>
-                      <span class="pinkacg_setting_content_text">更改我的头像</span>
-                    </a-upload>
-                  </label>
+                  <a-spin :spinning='loading'>
+                    <label style="padding: 0px 100px;" class="pinkacg_setting_content_my_avatar_upload-btn">
+                      <a-upload
+                        name="file"
+                        :show-upload-list="false"
+                        :customRequest="value => getUploadAvatar(value, 'avatar')"
+                        :before-upload="beforeUpload"
+                      >
+                        <span class="poi-icon fa-camera fas fa-fw"></span>
+                        <span class="pinkacg_setting_content_text">更改我的头像</span>
+                      </a-upload>
+                    </label>
+                  </a-spin>
                 </div>
               </div>
             </fieldset>
@@ -315,7 +317,7 @@
                           <a-button
                             class="my_switch_msg pinkacg_setting_content_btn_success">
                             <span class="poi-icon fa-check fas fa-fw"></span>
-                            <span class="pinkacg_setting_content_text">更新选项{{user_id}}</span></a-button>
+                            <span class="pinkacg_setting_content_text">更新选项</span></a-button>
                         </div>
                       </div>
                     </div>
@@ -411,7 +413,7 @@ export default {
       'userInfo': {},
       confirmDirty: false,
       getImg,
-      user_id: localStorage.getItem('user_id')
+      loading: false
     }
   },
   created () {
@@ -420,6 +422,7 @@ export default {
   methods: {
     getUploadAvatar (info, value) {
       const that = this
+      that.loading = true
       const formData = new FormData()
       formData.append('file', info.file)
       uploadImgFile(formData).then((res) => {
@@ -427,15 +430,21 @@ export default {
           that.$message.error(res.message)
           return []
         }
+        that.loading = true
         uploadAvatarImg({
           'avatar': res.result.data,
-          'id': this.user_id
+          'id': this.$store.getters.userInfo.id
         }).then((res) => {
           if (res.code !== 200) {
             that.$message.error(res.message)
             return []
           }
           that.$message.success(res.message)
+          setTimeout(() => {
+            that.$router.replace({
+              'path': '/refresh'
+            })
+          }, 2000)
         })
       })
     },
@@ -464,6 +473,11 @@ export default {
               return []
             }
             that.$message.success(res.message)
+            setTimeout(() => {
+              this.$router.replace({
+                'path': '/refresh'
+              })
+            }, 2000)
           })
         } else {
           that.$message.info('格式错误')
@@ -481,6 +495,11 @@ export default {
           return []
         }
         that.$message.success(res.message)
+        setTimeout(() => {
+          this.$router.replace({
+            'path': '/refresh'
+          })
+        }, 2000)
       })
     },
     updateUserPassword () {
@@ -494,6 +513,11 @@ export default {
               return []
             }
             that.$message.success(res.message)
+            setTimeout(() => {
+              this.$router.replace({
+                'path': '/refresh'
+              })
+            }, 2000)
           })
         } else {
           that.$message.info('格式错误')
@@ -510,6 +534,11 @@ export default {
               return []
             }
             that.$message.success(res.message)
+            setTimeout(() => {
+              this.$router.replace({
+                'path': '/refresh'
+              })
+            }, 2000)
           })
         } else {
           that.$message.info('格式错误')
@@ -519,7 +548,7 @@ export default {
     getUserInfo () {
       const that = this
       getUserList({
-        'id': this.user_id
+        'id': this.$store.getters.userInfo.id
       }).then((res) => {
         if (res.code !== 200) {
           that.$message.error(res.message)
