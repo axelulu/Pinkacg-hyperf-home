@@ -42,7 +42,7 @@
           <div v-if='postMeta.download_status' class="pinkacg_download_content">
             <router-view ref='download'></router-view>
             <fieldset v-for='(v, k) in postMeta.download' :key='k' class="pinkacg_download_content_content">
-              <div v-if='(v.link && v.credit && v.name) || v.link === ""'>
+              <div v-if='v.code === 200'>
                 <legend class="pinkacg_download_content_name">
                   <span class="pinkacg_download_label_success">磁力链接</span>
                 </legend>
@@ -116,7 +116,7 @@
                 </div>
               </div>
 
-              <div v-else>
+              <div v-else-if='v.code === 401'>
                 <legend class="pinkacg_download_content_name">
                   <span class="pinkacg_download_label_success">请购买</span>
                 </legend>

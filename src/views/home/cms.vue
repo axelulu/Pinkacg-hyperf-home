@@ -14,9 +14,9 @@
           </router-link>
         </h4>
         <span style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></span>
-        <a @click="orderBy='updated_at'" :class="orderBy=='updated_at' ? 'active ' : ''" class="home_title_menu_item">最新</a>
-        <a @click="orderBy='comment_count'" :class="orderBy=='comment_count' ? 'active ' : ''" class="home_title_menu_item">评论</a>
-        <a @click="orderBy='views'" :class="orderBy=='views' ? 'active ' : ''" class="home_title_menu_item">浏览</a>
+        <a @click="orderBy='updated_at'" :class="orderBy==='updated_at' ? 'active ' : ''" class="home_title_menu_item">最新</a>
+        <a @click="orderBy='comment_count'" :class="orderBy==='comment_count' ? 'active ' : ''" class="home_title_menu_item">评论</a>
+        <a @click="orderBy='views'" :class="orderBy==='views' ? 'active ' : ''" class="home_title_menu_item">浏览</a>
       </div>
       <a-spin :spinning="loading">
         <div style="height: 480px" class="pinkacg_box_1 cms-cat cms-cat-s7">

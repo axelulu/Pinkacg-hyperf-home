@@ -51,7 +51,7 @@
                   :key="k"
                   class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-26519">
                   <router-link :to="'/category/' + v.value">
-                    <i :class="'catacg-mune-tubiao ' + v.icon "> </i>{{ v.label }}<i class="pinkacg-menu-posts-count" title="本周发布的">{{ v.num }}</i>
+                    <i :class="'catacg-mune-tubiao ' + v.icon "> </i>{{ v.label }}<i class="pinkacg-menu-posts-count" title="本周发布的">{{ CategoryNum[k] }}</i>
                   </router-link>
                   <ul v-if="v.children" class="sub-menu">
                     <li
@@ -252,7 +252,7 @@
 </template>
 
 <script>
-import { getCategoryList } from '@/api/category'
+import { getCategoryList, getCategoryNum } from '@/api/category'
 import { getSettingList } from '@/api/setting'
 import storage from 'store'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
@@ -261,12 +261,16 @@ import { getImg } from '@/utils/util'
 
 export default {
   name: 'Header',
+  components: {
+    getCategoryNum
+  },
   data () {
     return {
       'isLogin': !!storage.get(ACCESS_TOKEN),
       'category': [],
       'site_meta': {},
-      getImg
+      getImg,
+      CategoryNum: []
     }
   },
   created () {
@@ -275,11 +279,11 @@ export default {
     }
     this.getSetting()
     getCategoryList({
-      'son': 0,
-      'son_slug': 1
+      'son': 0
     }).then((res) => {
       this.category = res.result.data
     })
+    this.getCategoryNum()
   },
   metaInfo () {
     return {
@@ -296,6 +300,11 @@ export default {
     }
   },
   methods: {
+    getCategoryNum () {
+      getCategoryNum().then(res => {
+        this.CategoryNum = res.result.num
+      })
+    },
     ...mapActions(['Logout', 'GetInfo']),
     Logouts () {
       this.Logout().then(() => {
